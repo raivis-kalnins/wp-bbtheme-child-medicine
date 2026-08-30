@@ -28,7 +28,7 @@ function wpbb_medicine_needs_directory_assets() {
     if ( is_post_type_archive( 'doctor' ) || is_tax( array( 'doctor_speciality', 'doctor_location' ) ) ) return true;
     if ( is_singular() ) {
         $content = (string) get_post_field( 'post_content', get_queried_object_id() );
-        return has_shortcode( $content, 'wp_theme_doctor_directory' );
+        return has_shortcode( $content, 'wp_theme_doctor_directory' ) || has_block( 'wpbb/sector-finder', $content );
     }
     return false;
 }
@@ -142,6 +142,11 @@ function wpbb_medicine_doctor_directory_shortcode(){
     $specs=get_terms(array('taxonomy'=>'doctor_speciality','hide_empty'=>false));$locs=get_terms(array('taxonomy'=>'doctor_location','hide_empty'=>false));ob_start();?><section class="medicine-doctor-directory" data-doctor-directory><div class="container"><div class="medicine-doctor-toolbar"><form data-doctor-filter><div class="row g-3"><div class="col-12 col-lg-5"><label><?php esc_html_e('Doctor or keyword','wp-bbtheme-child-medicine'); ?></label><input type="search" name="search" placeholder="<?php esc_attr_e('Search doctors…','wp-bbtheme-child-medicine'); ?>"></div><div class="col-12 col-md-5 col-lg-3"><label><?php esc_html_e('Speciality','wp-bbtheme-child-medicine'); ?></label><select name="speciality"><option value=""><?php esc_html_e('All specialities','wp-bbtheme-child-medicine'); ?></option><?php foreach($specs as $term):?><option value="<?php echo esc_attr($term->slug); ?>"><?php echo esc_html($term->name); ?></option><?php endforeach;?></select></div><div class="col-12 col-md-5 col-lg-3"><label><?php esc_html_e('Location','wp-bbtheme-child-medicine'); ?></label><select name="location"><option value=""><?php esc_html_e('All locations','wp-bbtheme-child-medicine'); ?></option><?php foreach($locs as $term):?><option value="<?php echo esc_attr($term->slug); ?>"><?php echo esc_html($term->name); ?></option><?php endforeach;?></select></div><div class="col-12 col-md-2 col-lg-1 d-flex align-items-end"><button class="btn btn-primary w-100" type="submit" aria-label="<?php esc_attr_e('Filter doctors','wp-bbtheme-child-medicine'); ?>">→</button></div></div></form></div><div class="medicine-doctor-results" data-doctor-results aria-live="polite"><?php echo wpbb_medicine_directory_results(); ?></div></div></section><?php return ob_get_clean();
 }
 add_shortcode('wp_theme_doctor_directory','wpbb_medicine_doctor_directory_shortcode');
+function wpbb_medicine_sector_finder_render_v37( $html, $context, $attributes ) {
+    if ( 'medicine-doctors' !== $context ) return $html;
+    return wpbb_medicine_doctor_directory_shortcode();
+}
+add_filter( 'wp_theme_sector_finder_render', 'wpbb_medicine_sector_finder_render_v37', 20, 3 );
 function wpbb_medicine_ajax_doctors(){check_ajax_referer('wpbb_medicine_doctors','nonce');$request=array('search'=>sanitize_text_field(wp_unslash($_POST['search']??'')),'speciality'=>sanitize_key(wp_unslash($_POST['speciality']??'')),'location'=>sanitize_key(wp_unslash($_POST['location']??'')));wp_send_json_success(array('html'=>wpbb_medicine_directory_results($request)));}
 add_action('wp_ajax_wpbb_medicine_doctors','wpbb_medicine_ajax_doctors');add_action('wp_ajax_nopriv_wpbb_medicine_doctors','wpbb_medicine_ajax_doctors');
 
@@ -184,3 +189,305 @@ function wpbb_medicine_mega_menu_definitions( $definitions, $profile ) {
     return $definitions;
 }
 add_filter( 'wp_theme_demo_mega_menu_definitions', 'wpbb_medicine_mega_menu_definitions', 20, 2 );
+
+/** v3.5 sector editorial labels. */
+function wpbb_medicine_blog_profile_v35( $profile ) {
+    if ( ( $profile['id'] ?? '' ) !== 'medicine' ) return $profile;
+    $profile['blog_eyebrow'] = __( 'Health insights', 'wp-bbtheme-child-medicine' );
+    $profile['blog_archive_title'] = __( 'Clear health guidance from our clinical team.', 'wp-bbtheme-child-medicine' );
+    $profile['blog_archive_intro'] = __( 'Practical preparation, preventive care and specialist guidance written to make the next step easier to understand.', 'wp-bbtheme-child-medicine' );
+    return $profile;
+}
+add_filter( 'wp_theme_demo_profile', 'wpbb_medicine_blog_profile_v35', 90 );
+
+/**
+ * v3.6 Pharmacy quote catalogue.
+ * This is intentionally non-WooCommerce: products are informational and create quote requests.
+ */
+function wpbb_medicine_register_pharmacy_content() {
+    register_post_type( 'pharmacy_product', array(
+        'labels' => array(
+            'name'          => __( 'Pharmacy Products', 'wp-bbtheme-child-medicine' ),
+            'singular_name' => __( 'Pharmacy Product', 'wp-bbtheme-child-medicine' ),
+            'add_new_item'  => __( 'Add pharmacy product', 'wp-bbtheme-child-medicine' ),
+        ),
+        'public'       => true,
+        'show_in_rest' => true,
+        'has_archive'  => 'pharmacy',
+        'rewrite'      => array( 'slug' => 'pharmacy' ),
+        'menu_icon'    => 'dashicons-plus-alt2',
+        'supports'     => array( 'title', 'editor', 'excerpt', 'thumbnail', 'page-attributes' ),
+    ) );
+    register_taxonomy( 'pharmacy_category', 'pharmacy_product', array(
+        'label'        => __( 'Pharmacy Categories', 'wp-bbtheme-child-medicine' ),
+        'public'       => true,
+        'show_in_rest' => true,
+        'hierarchical' => true,
+        'rewrite'      => array( 'slug' => 'pharmacy-category' ),
+    ) );
+    register_post_type( 'pharmacy_quote', array(
+        'labels' => array(
+            'name'          => __( 'Pharmacy Quotes', 'wp-bbtheme-child-medicine' ),
+            'singular_name' => __( 'Pharmacy Quote', 'wp-bbtheme-child-medicine' ),
+        ),
+        'public'              => false,
+        'show_ui'             => true,
+        'show_in_menu'        => 'edit.php?post_type=pharmacy_product',
+        'exclude_from_search' => true,
+        'menu_icon'           => 'dashicons-email-alt2',
+        'supports'            => array( 'title' ),
+    ) );
+}
+add_action( 'init', 'wpbb_medicine_register_pharmacy_content', 12 );
+
+function wpbb_medicine_pharmacy_fields() {
+    return array(
+        'code'         => __( 'Product code', 'wp-bbtheme-child-medicine' ),
+        'form'         => __( 'Form', 'wp-bbtheme-child-medicine' ),
+        'strength'     => __( 'Strength / specification', 'wp-bbtheme-child-medicine' ),
+        'pack'         => __( 'Pack size', 'wp-bbtheme-child-medicine' ),
+        'availability' => __( 'Availability', 'wp-bbtheme-child-medicine' ),
+        'quote_note'   => __( 'Quote note', 'wp-bbtheme-child-medicine' ),
+    );
+}
+function wpbb_medicine_pharmacy_box() {
+    add_meta_box( 'wpbb-pharmacy-product', __( 'Pharmacy product details', 'wp-bbtheme-child-medicine' ), 'wpbb_medicine_pharmacy_box_render', 'pharmacy_product', 'normal', 'high' );
+}
+add_action( 'add_meta_boxes', 'wpbb_medicine_pharmacy_box' );
+function wpbb_medicine_pharmacy_box_render( $post ) {
+    wp_nonce_field( 'wpbb_medicine_save_pharmacy', 'wpbb_medicine_pharmacy_nonce' );
+    echo '<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px">';
+    foreach ( wpbb_medicine_pharmacy_fields() as $key => $label ) {
+        $value = get_post_meta( $post->ID, '_pharmacy_' . $key, true );
+        echo '<label><strong>' . esc_html( $label ) . '</strong><input class="widefat" type="text" name="wpbb_pharmacy[' . esc_attr( $key ) . ']" value="' . esc_attr( $value ) . '"></label>';
+    }
+    echo '</div>';
+}
+function wpbb_medicine_save_pharmacy_product( $post_id ) {
+    if ( empty( $_POST['wpbb_medicine_pharmacy_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wpbb_medicine_pharmacy_nonce'] ) ), 'wpbb_medicine_save_pharmacy' ) || ! current_user_can( 'edit_post', $post_id ) ) return;
+    $values = isset( $_POST['wpbb_pharmacy'] ) && is_array( $_POST['wpbb_pharmacy'] ) ? wp_unslash( $_POST['wpbb_pharmacy'] ) : array();
+    foreach ( wpbb_medicine_pharmacy_fields() as $key => $label ) update_post_meta( $post_id, '_pharmacy_' . $key, sanitize_text_field( $values[ $key ] ?? '' ) );
+}
+add_action( 'save_post_pharmacy_product', 'wpbb_medicine_save_pharmacy_product' );
+
+function wpbb_medicine_pharmacy_demo_image( $slug, $title ) {
+    $existing = get_page_by_path( 'demo-pharmacy-' . $slug, OBJECT, 'attachment' );
+    if ( $existing ) return $existing->ID;
+    $source = get_stylesheet_directory() . '/assets/img/pharmacy/' . $slug . '.svg';
+    if ( ! is_readable( $source ) ) return 0;
+    $uploads = wp_upload_dir();
+    $dir = trailingslashit( $uploads['basedir'] ) . 'wpbb-medicine-pharmacy';
+    wp_mkdir_p( $dir );
+    $target = $dir . '/' . $slug . '.svg';
+    if ( ! file_exists( $target ) ) copy( $source, $target );
+    $id = wp_insert_attachment( array( 'post_mime_type'=>'image/svg+xml', 'post_title'=>$title, 'post_name'=>'demo-pharmacy-' . $slug, 'post_status'=>'inherit' ), $target );
+    if ( $id && ! is_wp_error( $id ) ) update_post_meta( $id, '_wp_attachment_image_alt', $title );
+    return is_wp_error( $id ) ? 0 : $id;
+}
+
+function wpbb_medicine_seed_pharmacy_products( $profile ) {
+    if ( ( $profile['id'] ?? '' ) !== 'medicine' ) return;
+    $categories = array( 'Everyday health', 'Skin care', 'Travel health', 'First aid' );
+    foreach ( $categories as $name ) if ( ! term_exists( $name, 'pharmacy_category' ) ) wp_insert_term( $name, 'pharmacy_category' );
+    $rows = array(
+        array( 'Vitamin D3 Support', 'vitamin-d', 'Everyday health', 'PH-D3-1000', 'Capsules', '1000 IU', '60 capsules', 'Usually available', 'Suitable for a personalised pharmacy quote.' ),
+        array( 'Dermatology Care Pack', 'skin-care', 'Skin care', 'PH-SKIN-01', 'Care set', 'Sensitive skin', '3 products', 'Pharmacist review', 'Request a quote for the recommended care combination.' ),
+        array( 'Travel Health Kit', 'travel-kit', 'Travel health', 'PH-TRAVEL-02', 'Kit', 'Travel essentials', '8 items', 'Usually available', 'A pharmacist can adapt the kit to destination and trip length.' ),
+        array( 'Allergy Support', 'allergy-relief', 'Everyday health', 'PH-ALL-10', 'Tablets', '10 mg', '30 tablets', 'Pharmacist review', 'Quote request includes a short suitability review.' ),
+        array( 'Joint Support Pack', 'joint-support', 'Everyday health', 'PH-JOINT-01', 'Capsules', 'Daily support', '60 capsules', 'Usually available', 'Ask for a tailored pack and supply estimate.' ),
+        array( 'Family First Aid Kit', 'first-aid', 'First aid', 'PH-FIRST-01', 'Kit', 'Home / travel', '24 items', 'Usually available', 'Request a quote for one or multiple kits.' ),
+    );
+    foreach ( $rows as $index => $row ) {
+        list( $title, $slug, $category, $code, $form, $strength, $pack, $availability, $quote_note ) = $row;
+        $existing = get_page_by_path( $slug, OBJECT, 'pharmacy_product' );
+        $args = array(
+            'post_type'    => 'pharmacy_product',
+            'post_status'  => 'publish',
+            'post_title'   => $title,
+            'post_name'    => $slug,
+            'menu_order'   => $index,
+            'post_excerpt' => sprintf( __( '%s with pharmacist-led quote support.', 'wp-bbtheme-child-medicine' ), $title ),
+            'post_content' => '<!-- wp:paragraph --><p>' . esc_html__( 'Demo pharmacy catalogue content. Replace this with the approved product information, usage guidance, exclusions and regulatory copy for the real project.', 'wp-bbtheme-child-medicine' ) . '</p><!-- /wp:paragraph -->',
+        );
+        if ( $existing ) { $args['ID'] = $existing->ID; $id = wp_update_post( $args ); } else { $id = wp_insert_post( $args ); }
+        if ( ! $id || is_wp_error( $id ) ) continue;
+        wp_set_object_terms( $id, $category, 'pharmacy_category' );
+        foreach ( compact( 'code','form','strength','pack','availability','quote_note' ) as $key => $value ) update_post_meta( $id, '_pharmacy_' . $key, $value );
+        $image_id = wpbb_medicine_pharmacy_demo_image( $slug, $title );
+        if ( $image_id ) set_post_thumbnail( $id, $image_id );
+        update_post_meta( $id, '_wp_theme_demo_pharmacy_product', 1 );
+    }
+}
+add_action( 'wp_theme_seed_sector_pages', 'wpbb_medicine_seed_pharmacy_products', 25 );
+
+function wpbb_medicine_pharmacy_archive_url() {
+    $url = get_post_type_archive_link( 'pharmacy_product' );
+    return $url ?: home_url( '/pharmacy/' );
+}
+
+function wpbb_medicine_pharmacy_navigation( $items, $profile ) {
+    if ( ( $profile['id'] ?? '' ) !== 'medicine' ) return $items;
+    $insert = array( array( 'key'=>'pharmacy', 'title'=>__( 'Pharmacy', 'wp-bbtheme-child-medicine' ), 'type'=>'post_type_archive', 'object'=>'pharmacy_product', 'locations'=>array('header','footer') ) );
+    $position = 2;
+    array_splice( $items, $position, 0, $insert );
+    return $items;
+}
+add_filter( 'wp_theme_demo_navigation_items', 'wpbb_medicine_pharmacy_navigation', 25, 2 );
+
+function wpbb_medicine_pharmacy_home_section( $content, $profile ) {
+    if ( ( $profile['id'] ?? '' ) !== 'medicine' ) return $content;
+    $attrs = array( 'title'=>__( 'Pharmacy & health products', 'wp-bbtheme-child-medicine' ), 'postsToShow'=>6, 'postType'=>'pharmacy_product', 'taxonomy'=>'pharmacy_category', 'sortBy'=>'menu_order', 'sortOrder'=>'ASC', 'showImage'=>true, 'showExcerpt'=>true, 'className'=>'medicine-pharmacy-catalogue' );
+    $section = '<!-- wp:group {"className":"wp-theme-section-shell medicine-pharmacy-section","layout":{"type":"default"}} --><div class="wp-block-group wp-theme-section-shell medicine-pharmacy-section"><!-- wp:wpbb/row {"containerClass":"container","customClasses":"wp-theme-section-heading align-items-end"} --><!-- wp:wpbb/column {"xs":12,"lg":8} -->' . wp_theme_demo_p( esc_html__( 'Clinic pharmacy','wp-bbtheme-child-medicine' ), 'wp-theme-sector-eyebrow' ) . wp_theme_demo_h( __( 'Health products with a quote-first pharmacy workflow.', 'wp-bbtheme-child-medicine' ), 2 ) . wp_theme_demo_p( esc_html__( 'Browse useful products, review the information and request a tailored quote instead of using a retail checkout.', 'wp-bbtheme-child-medicine' ) ) . '<!-- /wp:wpbb/column --><!-- wp:wpbb/column {"xs":12,"lg":4} -->' . wp_theme_demo_buttons( __( 'Browse pharmacy', 'wp-bbtheme-child-medicine' ), wpbb_medicine_pharmacy_archive_url() ) . '<!-- /wp:wpbb/column --><!-- /wp:wpbb/row --><!-- wp:wpbb/row {"containerClass":"container"} --><!-- wp:wpbb/column {"xs":12} --><!-- wp:wpbb/catalogue ' . wp_theme_demo_block_attrs( $attrs ) . ' /--><!-- /wp:wpbb/column --><!-- /wp:wpbb/row --></div><!-- /wp:group -->';
+    return $content . $section;
+}
+add_filter( 'wp_theme_demo_extra_home_sections', 'wpbb_medicine_pharmacy_home_section', 35, 2 );
+
+function wpbb_medicine_pharmacy_quote_form( $product_id ) {
+    $product_id = absint( $product_id );
+    $success = isset( $_GET['quote'] ) && 'received' === sanitize_key( wp_unslash( $_GET['quote'] ) );
+    ob_start();
+    ?>
+    <div class="medicine-pharmacy-quote-card" id="request-quote">
+        <p class="wp-theme-sector-eyebrow"><?php esc_html_e( 'Request a quote', 'wp-bbtheme-child-medicine' ); ?></p>
+        <h2><?php esc_html_e( 'Ask the pharmacy team for availability and pricing.', 'wp-bbtheme-child-medicine' ); ?></h2>
+        <?php if ( $success ) : ?><div class="alert alert-success" role="status"><?php esc_html_e( 'Thanks. Your pharmacy quote request has been received.', 'wp-bbtheme-child-medicine' ); ?></div><?php endif; ?>
+        <form class="wpbb-dynamic-form medicine-pharmacy-quote-form" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+            <input type="hidden" name="action" value="wpbb_medicine_submit_quote">
+            <input type="hidden" name="product_id" value="<?php echo esc_attr( $product_id ); ?>">
+            <?php wp_nonce_field( 'wpbb_medicine_quote_' . $product_id, 'wpbb_medicine_quote_nonce' ); ?>
+            <div class="row g-3">
+                <div class="col-12 col-md-6"><label><?php esc_html_e( 'Name', 'wp-bbtheme-child-medicine' ); ?><input type="text" name="name" required autocomplete="name"></label></div>
+                <div class="col-12 col-md-6"><label><?php esc_html_e( 'Email', 'wp-bbtheme-child-medicine' ); ?><input type="email" name="email" required autocomplete="email"></label></div>
+                <div class="col-12 col-md-6"><label><?php esc_html_e( 'Phone', 'wp-bbtheme-child-medicine' ); ?><input type="tel" name="phone" autocomplete="tel"></label></div>
+                <div class="col-12 col-md-6"><label><?php esc_html_e( 'Organisation', 'wp-bbtheme-child-medicine' ); ?><input type="text" name="company" autocomplete="organization"></label></div>
+                <div class="col-12"><label><?php esc_html_e( 'What do you need?', 'wp-bbtheme-child-medicine' ); ?><textarea name="message" rows="5" placeholder="<?php esc_attr_e( 'Quantity, timing, delivery or any questions for the pharmacy team.', 'wp-bbtheme-child-medicine' ); ?>"></textarea></label></div>
+                <div class="col-12"><label class="medicine-pharmacy-consent"><input type="checkbox" name="consent" value="1" required><span><?php esc_html_e( 'I agree that the clinic may use these details to respond to this quote request.', 'wp-bbtheme-child-medicine' ); ?></span></label></div>
+                <div class="col-12"><button class="btn btn-primary" type="submit"><?php esc_html_e( 'Request pharmacy quote', 'wp-bbtheme-child-medicine' ); ?></button></div>
+            </div>
+        </form>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+
+function wpbb_medicine_submit_quote() {
+    $product_id = absint( $_POST['product_id'] ?? 0 );
+    if ( ! $product_id || 'pharmacy_product' !== get_post_type( $product_id ) ) wp_die( esc_html__( 'Invalid pharmacy product.', 'wp-bbtheme-child-medicine' ) );
+    if ( empty( $_POST['wpbb_medicine_quote_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['wpbb_medicine_quote_nonce'] ) ), 'wpbb_medicine_quote_' . $product_id ) ) wp_die( esc_html__( 'The quote form expired. Please try again.', 'wp-bbtheme-child-medicine' ) );
+    $name = sanitize_text_field( wp_unslash( $_POST['name'] ?? '' ) );
+    $email = sanitize_email( wp_unslash( $_POST['email'] ?? '' ) );
+    $phone = sanitize_text_field( wp_unslash( $_POST['phone'] ?? '' ) );
+    $company = sanitize_text_field( wp_unslash( $_POST['company'] ?? '' ) );
+    $message = sanitize_textarea_field( wp_unslash( $_POST['message'] ?? '' ) );
+    $consent = ! empty( $_POST['consent'] );
+    if ( '' === $name || ! is_email( $email ) || ! $consent ) wp_die( esc_html__( 'Please complete the required quote fields.', 'wp-bbtheme-child-medicine' ) );
+    $quote_id = wp_insert_post( array( 'post_type'=>'pharmacy_quote', 'post_status'=>'publish', 'post_title'=>sprintf( '%s — %s', get_the_title( $product_id ), $name ) ) );
+    if ( $quote_id && ! is_wp_error( $quote_id ) ) {
+        foreach ( array( 'product_id'=>$product_id, 'name'=>$name, 'email'=>$email, 'phone'=>$phone, 'company'=>$company, 'message'=>$message, 'status'=>'new' ) as $key => $value ) update_post_meta( $quote_id, '_pharmacy_quote_' . $key, $value );
+        $recipient = get_option( 'admin_email' );
+        wp_mail( $recipient, sprintf( __( 'Pharmacy quote request: %s', 'wp-bbtheme-child-medicine' ), get_the_title( $product_id ) ), "Name: {$name}\nEmail: {$email}\nPhone: {$phone}\nOrganisation: {$company}\nProduct: " . get_the_title( $product_id ) . "\n\n{$message}" );
+    }
+    wp_safe_redirect( add_query_arg( 'quote', 'received', get_permalink( $product_id ) ) . '#request-quote' );
+    exit;
+}
+add_action( 'admin_post_wpbb_medicine_submit_quote', 'wpbb_medicine_submit_quote' );
+add_action( 'admin_post_nopriv_wpbb_medicine_submit_quote', 'wpbb_medicine_submit_quote' );
+
+function wpbb_medicine_pharmacy_product_content( $content ) {
+    if ( ! is_singular( 'pharmacy_product' ) || ! in_the_loop() || ! is_main_query() ) return $content;
+    $id = get_the_ID();
+    $image = get_the_post_thumbnail_url( $id, 'large' );
+    $terms = wp_get_post_terms( $id, 'pharmacy_category', array( 'fields'=>'names' ) );
+    $facts = array(
+        __( 'Product code', 'wp-bbtheme-child-medicine' ) => get_post_meta( $id, '_pharmacy_code', true ),
+        __( 'Form', 'wp-bbtheme-child-medicine' ) => get_post_meta( $id, '_pharmacy_form', true ),
+        __( 'Strength', 'wp-bbtheme-child-medicine' ) => get_post_meta( $id, '_pharmacy_strength', true ),
+        __( 'Pack size', 'wp-bbtheme-child-medicine' ) => get_post_meta( $id, '_pharmacy_pack', true ),
+        __( 'Availability', 'wp-bbtheme-child-medicine' ) => get_post_meta( $id, '_pharmacy_availability', true ),
+    );
+    $html = '<section class="medicine-pharmacy-single"><div class="container"><div class="row g-5 align-items-start"><div class="col-12 col-lg-6">' . ( $image ? '<div class="medicine-pharmacy-single__media"><img src="' . esc_url( $image ) . '" alt="' . esc_attr( get_the_title() ) . '"></div>' : '' ) . '</div><div class="col-12 col-lg-6"><p class="wp-theme-sector-eyebrow">' . esc_html( $terms[0] ?? __( 'Clinic pharmacy', 'wp-bbtheme-child-medicine' ) ) . '</p><h1>' . esc_html( get_the_title() ) . '</h1><p class="medicine-pharmacy-single__lead">' . esc_html( get_the_excerpt() ) . '</p><div class="medicine-pharmacy-facts">';
+    foreach ( $facts as $label => $value ) if ( '' !== trim( (string) $value ) ) $html .= '<div><small>' . esc_html( $label ) . '</small><strong>' . esc_html( $value ) . '</strong></div>';
+    $html .= '</div><a class="btn btn-primary" href="#request-quote">' . esc_html__( 'Request a quote', 'wp-bbtheme-child-medicine' ) . '</a></div></div><div class="medicine-pharmacy-content">' . $content . '</div>' . wpbb_medicine_pharmacy_quote_form( $id ) . '</div></section>';
+    return $html;
+}
+add_filter( 'the_content', 'wpbb_medicine_pharmacy_product_content', 25 );
+
+function wpbb_medicine_quote_columns( $columns ) {
+    return array( 'cb'=>$columns['cb'], 'title'=>__( 'Quote', 'wp-bbtheme-child-medicine' ), 'product'=>__( 'Product', 'wp-bbtheme-child-medicine' ), 'customer'=>__( 'Customer', 'wp-bbtheme-child-medicine' ), 'status'=>__( 'Status', 'wp-bbtheme-child-medicine' ), 'date'=>$columns['date'] );
+}
+add_filter( 'manage_pharmacy_quote_posts_columns', 'wpbb_medicine_quote_columns' );
+function wpbb_medicine_quote_column( $column, $post_id ) {
+    if ( 'product' === $column ) { $product_id = absint( get_post_meta( $post_id, '_pharmacy_quote_product_id', true ) ); echo esc_html( get_the_title( $product_id ) ); }
+    if ( 'customer' === $column ) echo esc_html( get_post_meta( $post_id, '_pharmacy_quote_name', true ) . ' · ' . get_post_meta( $post_id, '_pharmacy_quote_email', true ) );
+    if ( 'status' === $column ) echo '<span class="status-new">' . esc_html( ucfirst( get_post_meta( $post_id, '_pharmacy_quote_status', true ) ?: 'new' ) ) . '</span>';
+}
+add_action( 'manage_pharmacy_quote_posts_custom_column', 'wpbb_medicine_quote_column', 10, 2 );
+
+function wpbb_medicine_pharmacy_search_types( $types ) {
+    if ( post_type_exists( 'pharmacy_product' ) ) $types[] = 'pharmacy_product';
+    return array_values( array_unique( $types ) );
+}
+add_filter( 'wp_theme_header_search_post_types', 'wpbb_medicine_pharmacy_search_types' );
+
+function wpbb_medicine_pharmacy_mega_menu( $definitions, $profile ) {
+    if ( ( $profile['id'] ?? '' ) !== 'medicine' ) return $definitions;
+    if ( isset( $definitions['doctors']['columns'][2]['links'] ) ) {
+        $definitions['doctors']['columns'][2]['links'][] = array(
+            __( 'Pharmacy', 'wp-bbtheme-child-medicine' ),
+            __( 'Browse quote-first health products and ask the pharmacy team for availability.', 'wp-bbtheme-child-medicine' ),
+            wpbb_medicine_pharmacy_archive_url(),
+        );
+    }
+    $definitions['pharmacy'] = array(
+        'title'      => __( 'Pharmacy navigation', 'wp-bbtheme-child-medicine' ),
+        'target_key' => 'pharmacy',
+        'eyebrow'    => __( 'Clinic pharmacy', 'wp-bbtheme-child-medicine' ),
+        'heading'    => __( 'Products with pharmacist-led quote support.', 'wp-bbtheme-child-medicine' ),
+        'intro'      => __( 'Browse by need, review useful information and request a tailored quote.', 'wp-bbtheme-child-medicine' ),
+        'columns'    => array(
+            array( 'title'=>__( 'Browse', 'wp-bbtheme-child-medicine' ), 'links'=>array(
+                array( __( 'All pharmacy products', 'wp-bbtheme-child-medicine' ), __( 'See the complete quote catalogue.', 'wp-bbtheme-child-medicine' ), wpbb_medicine_pharmacy_archive_url() ),
+                array( __( 'Everyday health', 'wp-bbtheme-child-medicine' ), __( 'Daily support and preventive products.', 'wp-bbtheme-child-medicine' ), add_query_arg( 'pharmacy_category', 'everyday-health', wpbb_medicine_pharmacy_archive_url() ) ),
+                array( __( 'Travel health', 'wp-bbtheme-child-medicine' ), __( 'Travel kits and practical preparation.', 'wp-bbtheme-child-medicine' ), add_query_arg( 'pharmacy_category', 'travel-health', wpbb_medicine_pharmacy_archive_url() ) ),
+            ) ),
+            array( 'title'=>__( 'How quotes work', 'wp-bbtheme-child-medicine' ), 'links'=>array(
+                array( __( 'Choose a product', 'wp-bbtheme-child-medicine' ), __( 'Review the specification and pack information.', 'wp-bbtheme-child-medicine' ), wpbb_medicine_pharmacy_archive_url() ),
+                array( __( 'Request a quote', 'wp-bbtheme-child-medicine' ), __( 'Tell the team quantity, timing and delivery needs.', 'wp-bbtheme-child-medicine' ), wpbb_medicine_pharmacy_archive_url() ),
+                array( __( 'Pharmacist response', 'wp-bbtheme-child-medicine' ), __( 'Receive availability, pricing and any suitability questions.', 'wp-bbtheme-child-medicine' ), wp_theme_demo_page_url( 'contact' ) ),
+            ) ),
+            array( 'title'=>__( 'Patient support', 'wp-bbtheme-child-medicine' ), 'links'=>array(
+                array( __( 'Book a clinician', 'wp-bbtheme-child-medicine' ), __( 'Book a medical appointment where clinical review is needed.', 'wp-bbtheme-child-medicine' ), wp_theme_demo_page_url( 'appointments' ) ),
+                array( __( 'Health insights', 'wp-bbtheme-child-medicine' ), __( 'Read preparation and preventive-care guidance.', 'wp-bbtheme-child-medicine' ), get_permalink( get_option( 'page_for_posts' ) ) ?: home_url( '/blog/' ) ),
+                array( __( 'Contact', 'wp-bbtheme-child-medicine' ), __( 'Speak to patient or pharmacy support.', 'wp-bbtheme-child-medicine' ), wp_theme_demo_page_url( 'contact' ) ),
+            ) ),
+        ),
+    );
+    return $definitions;
+}
+add_filter( 'wp_theme_demo_mega_menu_definitions', 'wpbb_medicine_pharmacy_mega_menu', 35, 2 );
+
+/** Make the pharmacy catalogue a first-class BBuilder variation in the editor. */
+function wpbb_medicine_register_pharmacy_catalogue_variation_v36() {
+    if ( ! wp_script_is( 'wp-blocks', 'enqueued' ) ) wp_enqueue_script( 'wp-blocks' );
+    $script = <<<'JS'
+(function(wp){
+  if(!wp || !wp.blocks || !wp.blocks.registerBlockVariation) return;
+  wp.blocks.registerBlockVariation('wpbb/catalogue',{
+    name:'medicine-pharmacy-catalogue',
+    title:'Pharmacy Catalogue',
+    description:'Clinic pharmacy products with quote-first product cards.',
+    icon:'store',
+    attributes:{title:'Pharmacy & health products',postsToShow:6,postType:'pharmacy_product',taxonomy:'pharmacy_category',sortBy:'menu_order',sortOrder:'ASC',showImage:true,showExcerpt:true,className:'medicine-pharmacy-catalogue'},
+    scope:['inserter','block'],
+    isActive:function(attrs){return attrs && attrs.postType==='pharmacy_product';}
+  });
+})(window.wp);
+JS;
+    wp_add_inline_script( 'wp-blocks', $script, 'after' );
+}
+add_action( 'enqueue_block_editor_assets', 'wpbb_medicine_register_pharmacy_catalogue_variation_v36', 30 );
+
+function wpbb_medicine_flush_rewrites_v36() {
+    flush_rewrite_rules( false );
+}
+add_action( 'after_switch_theme', 'wpbb_medicine_flush_rewrites_v36' );

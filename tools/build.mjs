@@ -46,7 +46,7 @@ function rgbaHex(hex, alpha) {
 }
 
 function compileScss() {
-  const order = ['base', 'header', 'footer', 'components', 'swiper', 'motion', 'quality', 'sector', 'responsive'];
+  const order = ['base', 'header', 'footer', 'components', 'swiper', 'motion', 'quality', 'forms', 'blog', 'sector', 'responsive'];
   const tokens = parseTokens();
   let css = order.map((name) => read(`src/scss/_${name}.scss`)).join('\n');
   css = css.replace(/^\s*@use\s+['"]tokens['"](?:\s+as\s+\*)?\s*;\s*$/gm, '');
@@ -65,8 +65,9 @@ function compileScss() {
 function bundleJs() {
   const header = read('src/js/components/header.js').replace(/^export\s+/gm, '');
   const motion = read('src/js/components/motion.js').replace(/^export\s+/gm, '');
+  const blog = read('src/js/components/blog.js').replace(/^export\s+/gm, '');
   let main = read('src/js/main.js').replace(/^import[^;]+;\s*$/gm, '');
-  return `${header}\n${motion}\n${main}\n`;
+  return `${header}\n${motion}\n${blog}\n${main}\n`;
 }
 
 fs.rmSync(dist, { recursive: true, force: true });

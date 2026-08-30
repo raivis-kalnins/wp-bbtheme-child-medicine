@@ -1,0 +1,39 @@
+@use 'tokens' as *;
+/* v3.5 shared form system: consistent fields across BBuilder, newsletter and WooCommerce. */
+#wp-theme-main form,.wp-theme-site-footer form{font-family:$font-body}
+#wp-theme-main label,.wp-theme-site-footer label,.woocommerce form .form-row label{color:$heading;font-size:13px;font-weight:760;line-height:1.35}
+#wp-theme-main input:not([type=checkbox]):not([type=radio]):not([type=hidden]):not([type=submit]):not([type=button]),#wp-theme-main select,#wp-theme-main textarea,.wp-theme-site-footer input:not([type=checkbox]):not([type=radio]):not([type=hidden]):not([type=submit]):not([type=button]),.wp-theme-site-footer select,.wp-theme-site-footer textarea,.woocommerce form .form-row input.input-text,.woocommerce form .form-row textarea,.woocommerce form .form-row select{box-sizing:border-box;width:100%;max-width:100%;min-height:50px;margin:0;padding:0 15px;border:1px solid $border;border-radius:10px;background:$surface;color:$ink;font:inherit;line-height:1.35;box-shadow:0 1px 0 rgba(15,23,42,.02);transition:border-color .18s ease,box-shadow .18s ease,background .18s ease}
+#wp-theme-main textarea,.wp-theme-site-footer textarea,.woocommerce form .form-row textarea{min-height:150px;padding-top:13px;padding-bottom:13px;resize:vertical}
+#wp-theme-main select,.wp-theme-site-footer select,.woocommerce form .form-row select{padding-right:38px;cursor:pointer}
+#wp-theme-main input::placeholder,#wp-theme-main textarea::placeholder,.wp-theme-site-footer input::placeholder,.wp-theme-site-footer textarea::placeholder{color:$muted;opacity:.72}
+#wp-theme-main input:focus,#wp-theme-main select:focus,#wp-theme-main textarea:focus,.wp-theme-site-footer input:focus,.wp-theme-site-footer select:focus,.wp-theme-site-footer textarea:focus,.woocommerce form .form-row input.input-text:focus,.woocommerce form .form-row textarea:focus,.woocommerce form .form-row select:focus{outline:0;border-color:$primary;box-shadow:0 0 0 3px rgba($primary,.12)}
+#wp-theme-main input[type=checkbox],#wp-theme-main input[type=radio],.wp-theme-site-footer input[type=checkbox],.wp-theme-site-footer input[type=radio],.woocommerce form input[type=checkbox],.woocommerce form input[type=radio]{width:18px!important;min-width:18px!important;max-width:18px!important;height:18px!important;min-height:18px!important;margin:1px 0 0!important;padding:0!important;flex:0 0 18px;accent-color:$primary;box-shadow:none!important}
+.wpbb-dynamic-form,.wpbb-dynamic-form-wrap{width:100%}
+.wpbb-dynamic-form .row{row-gap:18px}
+.wpbb-dynamic-form .form-group,.wpbb-dynamic-form .wpbb-form-field{display:flex;flex-direction:column;gap:7px;margin:0}
+.wpbb-dynamic-form .form-check,.wpbb-dynamic-form .wpbb-form-check{display:flex;align-items:flex-start;gap:10px}
+.wpbb-dynamic-form .form-check label,.wpbb-dynamic-form .wpbb-form-check label{margin:0;font-weight:600;color:$muted}
+.wpbb-dynamic-form .wpbb-form-actions{display:flex;align-items:center;gap:12px;margin-top:22px}
+.wpbb-dynamic-form button[type=submit],.wpbb-dynamic-form .btn,.wp-theme-site-footer button[type=submit],.woocommerce button.button,.woocommerce a.button,.woocommerce input.button,.woocommerce #respond input#submit{min-height:48px;display:inline-flex;align-items:center;justify-content:center;padding:0 22px;border:1px solid $primary;border-radius:10px;background:$primary;color:#fff;font:inherit;font-weight:800;line-height:1;text-decoration:none;box-shadow:none;cursor:pointer;transition:transform .18s ease,background .18s ease,border-color .18s ease,box-shadow .18s ease}
+.wpbb-dynamic-form button[type=submit]:hover,.wpbb-dynamic-form .btn:hover,.wp-theme-site-footer button[type=submit]:hover,.woocommerce button.button:hover,.woocommerce a.button:hover,.woocommerce input.button:hover,.woocommerce #respond input#submit:hover{background:$primary-dark;border-color:$primary-dark;color:#fff;transform:translateY(-1px);box-shadow:0 8px 22px rgba($primary,.18)}
+.wp-theme-contact-form.wpbb-dynamic-form-wrap{padding:34px;border:1px solid $border;border-radius:$radius-lg;background:$soft;box-shadow:$shadow-soft}
+.wp-theme-contact-form .wpbb-dynamic-form-title{margin-bottom:22px}
+.wp-theme-contact-form .wpbb-dynamic-form-title h2,.wp-theme-contact-form .wpbb-dynamic-form-title h3{margin-bottom:8px}
+.wp-theme-footer-newsletter__form .wp-newslatter-campaigns-form{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(150px,.65fr) auto;gap:10px 12px;align-items:start}
+.wp-theme-footer-newsletter__form .wp-newslatter-campaigns-form>p,.wp-theme-footer-newsletter__form .wp-newslatter-campaigns-form>div{margin:0}
+.wp-theme-footer-newsletter__form .wp-newslatter-campaigns-consent,.wp-theme-footer-newsletter__form .wp-newslatter-campaigns-lists{grid-column:1/3;display:flex!important;align-items:flex-start!important;gap:9px!important;color:$footer-text;font-size:12px;line-height:1.45}
+.wp-theme-footer-newsletter__form .wp-newslatter-campaigns-form>button[type=submit]{grid-column:3;grid-row:1/3;align-self:stretch;min-width:118px;height:auto}
+.wp-theme-footer-newsletter__form .wp-newslatter-campaigns-message{grid-column:1/-1;margin-top:4px;font-size:12px}
+.woocommerce form .form-row{margin:0 0 18px!important;padding:0!important}
+.woocommerce form .form-row label{margin:0 0 7px!important}
+.woocommerce form .form-row .required{color:#b42318;text-decoration:none}
+.woocommerce .woocommerce-form-login__rememberme,.woocommerce .woocommerce-form__label-for-checkbox,.woocommerce .woocommerce-form__label{display:flex!important;align-items:flex-start!important;gap:9px!important;margin:10px 0!important}
+.woocommerce .select2-container{width:100%!important;max-width:100%}
+.woocommerce .select2-container .select2-selection--single{height:50px!important;border:1px solid $border!important;border-radius:10px!important;background:$surface!important}
+.woocommerce .select2-container--default .select2-selection--single .select2-selection__rendered{padding:0 42px 0 15px!important;color:$ink!important;line-height:48px!important}
+.woocommerce .select2-container--default .select2-selection--single .select2-selection__arrow{right:9px!important;height:48px!important}
+.woocommerce .woocommerce-error,.woocommerce .woocommerce-info,.woocommerce .woocommerce-message{margin:0 0 24px!important;padding:17px 20px 17px 48px!important;border:1px solid $border!important;border-top:0!important;border-radius:12px;background:$soft!important;color:$ink!important;box-shadow:none}
+.woocommerce .woocommerce-error:before,.woocommerce .woocommerce-info:before,.woocommerce .woocommerce-message:before{top:17px;left:18px;color:$primary}
+.woocommerce .woocommerce-invalid input,.woocommerce .woocommerce-invalid select,.woocommerce .woocommerce-invalid textarea{border-color:#b42318!important;box-shadow:0 0 0 3px rgba(180,35,24,.08)!important}
+.woocommerce .woocommerce-validated input,.woocommerce .woocommerce-validated select,.woocommerce .woocommerce-validated textarea{border-color:$secondary!important}
+.is-dark-theme #wp-theme-main input:not([type=checkbox]):not([type=radio]):not([type=hidden]):not([type=submit]):not([type=button]),.is-dark-theme #wp-theme-main select,.is-dark-theme #wp-theme-main textarea,.is-dark-theme .woocommerce form .form-row input.input-text,.is-dark-theme .woocommerce form .form-row textarea,.is-dark-theme .woocommerce form .form-row select{background:#0d1a28!important;border-color:#2a3c4f!important;color:#fff!important}
