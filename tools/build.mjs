@@ -46,7 +46,7 @@ function rgbaHex(hex, alpha) {
 }
 
 function compileScss() {
-  const order = ['base', 'header', 'footer', 'components', 'swiper', 'motion', 'quality', 'forms', 'blog', 'sector', 'responsive'];
+  const order = ['base', 'header', 'footer', 'components', 'swiper', 'motion', 'quality', 'forms', 'blog', 'sector', 'responsive', 'v371-fixes', 'v372-polish', 'v380-features'];
   const tokens = parseTokens();
   let css = order.map((name) => read(`src/scss/_${name}.scss`)).join('\n');
   css = css.replace(/^\s*@use\s+['"]tokens['"](?:\s+as\s+\*)?\s*;\s*$/gm, '');

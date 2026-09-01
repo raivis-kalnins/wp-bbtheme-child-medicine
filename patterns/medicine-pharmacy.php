@@ -2,7 +2,7 @@
 /**
  * Title: Medicine — Pharmacy quote catalogue
  * Slug: wp-bbtheme-child-medicine/pharmacy-quote-catalogue
- * Categories: featured, services
+ * Categories: featured, services, wp-theme-current
  */
 ?>
 <!-- wp:group {"className":"wp-theme-section-shell medicine-pharmacy-section","layout":{"type":"default"}} -->

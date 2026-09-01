@@ -1,0 +1,7 @@
+@use 'tokens' as *;
+/* v3.8 feature layer. Shared functional styles live in the parent; these rules keep sector tokens applied to them. */
+.wp-theme-partners-section{--wpbb-ess-primary:#{$primary};}
+.wp-theme-footer-install a,.wp-theme-footer-utility a,.wp-theme-footer-utility button{transition:opacity .18s ease,border-color .18s ease,color .18s ease,background .18s ease}
+.wp-theme-footer-install a:hover{border-color:rgba(255,255,255,.72);background:rgba(255,255,255,.06)}
+.wp-theme-article-author,.wp-theme-article-navigation a{border-color:$border}.wp-theme-article-author{background:$soft}.wp-theme-article-navigation a:hover{border-color:$primary;color:$primary}
+.wp-theme-blog-toolbar__meta{color:$muted}.wp-theme-blog-reset{border-color:$border;color:$ink}.wp-theme-blog-reset:hover{border-color:$primary;color:$primary}
