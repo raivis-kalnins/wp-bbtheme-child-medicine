@@ -14,3 +14,17 @@ Non-WooCommerce medical directory, doctor booking and pharmacy quote starter bui
 Doctor CPT/search, provider/service/date/time appointment booking, Health Insights AJAX blog, Contact/map, About timeline and sector patterns remain included.
 
 Run `yarn prod`. After upgrading, run **Appearance → Starter Setup → Import / Refresh Starter Website** so Pharmacy demo products/navigation are seeded and rewrite rules are refreshed.
+
+## SCSS structure (3.8.10.9)
+
+Frontend styles are split into `tokens`, `tools`, `base`, `header`, `footer`, `components`, `swiper`, `motion`, `forms`, `blog`, `quality`, `sector`, `responsive` and `features`. Fluid typography uses the suite `fluid-font()` mixin and explicit viewport guards rather than `clamp()`. The generated production CSS intentionally contains no `!important` declarations.
+
+### Build compatibility
+
+The child build is dependency-free and works with Yarn 1.22.x as well as newer Yarn versions. No Corepack step is required. Use:
+
+```sh
+yarn prod
+```
+
+The command runs `node tools/build.mjs` and rebuilds the hashed CSS/JS manifest directly.

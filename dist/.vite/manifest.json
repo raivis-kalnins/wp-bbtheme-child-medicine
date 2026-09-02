@@ -1,11 +1,11 @@
 {
   "src/scss/public.scss": {
-    "file": "assets/theme-8b07979893.css",
+    "file": "assets/theme-a3c58a5609.css",
     "src": "src/scss/public.scss",
     "isEntry": true
   },
   "src/js/main.js": {
-    "file": "assets/theme-2518dab6ef.js",
+    "file": "assets/theme-1ec30fe910.js",
     "src": "src/js/main.js",
     "isEntry": true
   }

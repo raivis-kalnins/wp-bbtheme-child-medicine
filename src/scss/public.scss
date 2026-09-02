@@ -1,14 +1,17 @@
 @use 'tokens';
+@use 'tools';
 @use 'base';
 @use 'header';
 @use 'footer';
 @use 'components';
 @use 'swiper';
 @use 'motion';
+@use 'forms';
+@use 'blog';
 @use 'quality';
 @use 'sector';
 @use 'responsive';
-@use 'v371-fixes';
-@use 'v372-polish';
-
-@use 'v380-features';
+@use 'features';
+@use 'functional-ui';
+@use 'design-system';
+@use 'premium-ui';

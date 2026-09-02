@@ -139,10 +139,24 @@ export function initBlog() {
   document.querySelectorAll('[data-copy-article-link]').forEach((button) => {
     button.addEventListener('click', async () => {
       const url = button.getAttribute('data-url') || window.location.href;
-      const original = button.textContent;
-      try { await navigator.clipboard.writeText(url); button.textContent = 'Copied'; }
-      catch (error) { window.prompt('Copy this link', url); }
-      window.setTimeout(() => { button.textContent = original; }, 1600);
+      const originalLabel = button.getAttribute('aria-label') || button.getAttribute('title') || 'Copy link';
+      let copied = false;
+      try {
+        if (!navigator.clipboard || typeof navigator.clipboard.writeText !== 'function') throw new Error('Clipboard API unavailable');
+        await navigator.clipboard.writeText(url);
+        copied = true;
+      } catch (error) {
+        window.prompt('Copy this link', url);
+      }
+      if (!copied) return;
+      button.classList.add('is-copied');
+      button.setAttribute('aria-label', 'Link copied');
+      button.setAttribute('title', 'Link copied');
+      window.setTimeout(() => {
+        button.classList.remove('is-copied');
+        button.setAttribute('aria-label', originalLabel);
+        button.setAttribute('title', originalLabel);
+      }, 1600);
     });
   });
 

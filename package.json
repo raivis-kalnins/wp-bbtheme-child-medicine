@@ -1,14 +1,13 @@
 {
   "name": "wp-bbtheme-child-medicine",
   "private": true,
-  "version": "3.8.10.6",
+  "version": "3.8.10.28",
   "type": "module",
   "scripts": {
     "dev": "node tools/build.mjs",
     "prod": "node tools/build.mjs"
   },
   "engines": {
-    "node": ">=18"
-  },
-  "packageManager": "yarn@3.5.0"
+    "node": ">=16.9"
+  }
 }
