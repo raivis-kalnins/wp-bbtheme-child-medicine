@@ -382,6 +382,26 @@ body {
   box-shadow: 0 14px 42px rgba(15,23,42,.06);
 }
 
+
+/* 3.8.10.38: keep native-style select chevrons comfortably inside the control edge. */
+#wp-theme-main select,
+.wp-theme-site-footer select,
+.woocommerce form .form-row select {
+  -webkit-appearance: none;
+  appearance: none;
+  padding-right: 48px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' stroke='%23626b7d' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 18px center;
+  background-size: 12px 8px;
+}
+#wp-theme-main select::-ms-expand,
+.wp-theme-site-footer select::-ms-expand,
+.woocommerce form .form-row select::-ms-expand { display: none; }
+.is-dark-theme #wp-theme-main select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' stroke='%23d8e1ea' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
 /* Cards and grids */
 .wp-theme-sector-services,
 .wp-theme-sector-industries,

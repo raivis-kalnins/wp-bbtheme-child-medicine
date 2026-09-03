@@ -1,8 +1,9 @@
-const MOTION_SELECTOR = '[data-motion], .motion-fade-up, .motion-fade-left, .motion-fade-right, .motion-scale-in, .motion-reveal';
+const MOTION_SELECTOR = '[data-motion], .motion-fade-up, .motion-fade-left, .motion-fade-right, .motion-scale-in, .motion-reveal, .wp-theme-motion-item';
 
 function show(node) {
   node.classList.remove('motion-pending');
   node.classList.add('motion-in');
+  node.classList.add('is-visible');
 }
 
 export function initMotion(root = document) {

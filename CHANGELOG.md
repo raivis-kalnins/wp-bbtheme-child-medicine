@@ -1,3 +1,87 @@
+## 3.8.10.46
+- Prevents heavy legacy sector-image migrations from running synchronously in the WordPress dashboard; a resumable small-batch worker now performs repairs safely.
+- Keeps frontend password protection inside **Theme Settings → General**.
+- Places compact gallery thumbnails inside the bottom of the main image and retains the accessible full-screen modal.
+- Restores active-sector demo, directory and managed Blog imagery after switching child themes, with Hotel posts using hospitality imagery.
+- Includes parent/plugin compatibility fixes for WordPress 6.7+ translation timing and ACF initialization.
+
+## 3.8.10.45
+
+- Normalised full-width section rhythm to 80px desktop, 64px tablet and 52px mobile, with a 50px minimum gap through linked stats/proof groups.
+- Added explicit light- and dark-mode card typography so headings, descriptions, metadata and links remain readable inside every sector layout.
+- Top-aligned and rescaled About/media rows across the shared page system.
+- Reassigned demo blog, directory, hero, gallery and page media from the active child theme so sector switching cannot leave images from another industry.
+- Added richer thumbnail galleries and a keyboard/touch-accessible full-screen modal to Hotel rooms and other directory themes using the same card/single layout.
+- Preserved the configurable frontend password protection introduced in 3.8.10.44.
+
+## 3.8.10.44
+
+- Standardised the default-on frontend password gate across all 13 child themes.
+- The initial frontend password is `wp@demo`; it is stored only as a WordPress password hash.
+- Added enable/disable and password-change controls at Settings → Theme Settings (`/wp-admin/options-general.php?page=wp-theme-settings`).
+- Added signed 24-hour access cookies, administrator bypass, no-cache headers and safe exemptions for wp-admin, AJAX, cron, REST and XML-RPC requests.
+- Existing protection settings and changed passwords from 3.8.10.42/3.8.10.43 are preserved.
+- Visual alignment, colour and media corrections from 3.8.10.43 are unchanged.
+
+## 3.8.10.43
+
+- Added the shared card/icon alignment pass used by all 13 child themes.
+- Fixed dark-mode directory-card links, metadata values, labels and action contrast.
+- Top-aligned media/text rows, removed generated block gaps and normalised proof/stat flow.
+- Removed duplicated single-item excerpts and aligned request/detail panels to the page grid.
+- Added deterministic eager loading for visible hero, gallery, blog, directory and product images.
+- Added an active-theme-aware media refresh so shared AVIF/WebP/JPEG demo attachments are rewritten after child-theme switches and receive current titles/alt text.
+- Plugins and parent-theme requirements are unchanged.
+
+## 3.8.10.42
+
+- Rebuilt demo/blog featured-image set from this child theme's own sector media.
+- Added v381041 one-time media refresh so existing optimized AVIF/WebP/JPEG attachments are rewritten and blog thumbnails are reassigned.
+- Plugins are unchanged.
+
+## 3.8.10.40
+- Fixed stale imported demo images when WordPress/image optimizers changed attachment originals to AVIF/WebP.
+- Refresh now resolves bundled photography by filename stem and regenerates attachment sub-sizes/metadata.
+- Retains the sector-specific photography, outline SVG icon system and select/finder UI fixes.
+
+## 3.8.10.38
+
+## 3.8.10.40
+- Theme-only visual QA release with sector-correct photographic demo media.
+- Refreshed imported-media migration so existing demo attachments are updated in place.
+- Replaced legacy filled icon assets with a consistent modern outline SVG set.
+- Hardened select chevrons and finder action alignment.
+- Improved media sharpness and contact-detail rendering.
+
+- Restored visible select chevrons with 18px right-edge spacing and aligned filter buttons.
+- Re-runs realistic demo-media migration so already-imported attachments receive the corrected sector photography.
+
+## 3.8.10.36
+
+## 3.8.10.38
+- Select controls now use a consistent custom chevron positioned 18px inside the right edge, with 48px right padding so filter/contact labels never crowd the arrow.
+- Added a matching light chevron for dark theme controls. No plugin changes.
+
+- Forced realistic media refresh for already imported demos.
+- Ensured sector-specific photographic demo/blog/page imagery.
+
+## 3.8.10.34
+- Fixed legacy motion blocks remaining invisible after load by restoring `.is-visible` compatibility.
+- Re-runs the admin-only realistic-media upgrade so existing demo/blog/page thumbnails pick up the refreshed sector photography.
+- Keeps WordPress image metadata APIs loaded before attachment insertion to avoid `wp_generate_attachment_metadata()` fatals.
+
+## 3.8.10.32
+- Fixed realistic-media attachment creation so WordPress image-admin functions load before `wp_insert_attachment()` fires `add_attachment`.
+- The one-time media upgrade now runs from normal WP Admin initialization only, not `wp_loaded`, AJAX, or cron.
+
+## 3.8.10.30
+- Dark-mode form and WooCommerce polish.
+- Project-preview imagery and improved icon sizing.
+
+## 3.8.10.29
+- Fixed WooCommerce header icon controls and My Account layout.
+- Added demo import refresh and empty-home integrity guard.
+
 ## 3.8.10.28
 
 - Increased the open/up submenu chevron offset so the arrow sits farther right inside the mobile submenu toggle.
