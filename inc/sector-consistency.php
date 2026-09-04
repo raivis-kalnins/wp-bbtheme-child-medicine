@@ -2,11 +2,31 @@
 /**
  * Cross-theme presentation and sector-media repair layer.
  *
- * Version 3.8.10.46 keeps demo content aligned after child-theme switching,
+ * Version 3.8.10.48 keeps demo content aligned after child-theme switching,
  * restores the active sector's bundled media, and provides the richer hotel
  * room gallery used on cards and single-room pages.
  */
 defined( 'ABSPATH' ) || exit;
+
+if ( ! function_exists( 'wpbb_child_381048_load_media_admin_api' ) ) {
+    /** Load WordPress media helpers safely for cron, admin-post and frontend-triggered repair requests. */
+    function wpbb_child_381048_load_media_admin_api() {
+        if ( function_exists( 'wp_generate_attachment_metadata' ) ) return true;
+        foreach ( array( 'file.php', 'media.php', 'image.php' ) as $include ) {
+            $path = ABSPATH . 'wp-admin/includes/' . $include;
+            if ( is_readable( $path ) ) require_once $path;
+        }
+        return function_exists( 'wp_generate_attachment_metadata' );
+    }
+}
+
+if ( ! function_exists( 'wpbb_child_381048_generate_attachment_metadata' ) ) {
+    /** Never let a missing admin include terminate a sector media-repair batch. */
+    function wpbb_child_381048_generate_attachment_metadata( $attachment_id, $file ) {
+        if ( ! wpbb_child_381048_load_media_admin_api() ) return array();
+        return wp_generate_attachment_metadata( absint( $attachment_id ), (string) $file );
+    }
+}
 
 /**
  * Disable the older synchronous media refreshes registered by 3.8.10.41-45.
@@ -434,7 +454,7 @@ if ( ! function_exists( 'wpbb_child_381045_import_attachment' ) ) {
         $current_hash = (string) get_post_meta( $attachment_id, '_wpbb_child_source_hash', true );
         if ( $source_hash !== $current_hash ) {
             if ( ! function_exists( 'wp_generate_attachment_metadata' ) ) require_once ABSPATH . 'wp-admin/includes/image.php';
-            $meta = wp_generate_attachment_metadata( $attachment_id, $target );
+            $meta = wpbb_child_381048_generate_attachment_metadata( $attachment_id, $target );
             if ( $meta ) wp_update_attachment_metadata( $attachment_id, $meta );
             update_post_meta( $attachment_id, '_wpbb_child_source_hash', $source_hash );
             update_post_meta( $attachment_id, '_wpbb_child_source_relative', $relative );
@@ -541,7 +561,7 @@ if ( ! function_exists( 'wpbb_child_381045_sync_sector_media' ) ) {
                 update_post_meta( $post_id, '_wpbb_child_gallery_ids', $gallery_ids );
                 update_post_meta( $post_id, '_wp_theme_item_gallery_ids', $gallery_ids );
                 update_post_meta( $post_id, '_wp_theme_item_gallery', implode( ',', $gallery_ids ) );
-                update_post_meta( $post_id, '_wpbb_child_gallery_version', '3.8.10.46' );
+                update_post_meta( $post_id, '_wpbb_child_gallery_version', '3.8.10.48' );
             }
         }
     }
@@ -592,7 +612,7 @@ if ( ! function_exists( 'wpbb_child_381045_sync_blog_media' ) ) {
             $attachment_id = $attachments[ $index % count( $attachments ) ];
             set_post_thumbnail( $post_id, $attachment_id );
             update_post_meta( $post_id, '_wpbb_child_sector_media_theme', $config['key'] );
-            update_post_meta( $post_id, '_wpbb_child_blog_media_version', '3.8.10.46' );
+            update_post_meta( $post_id, '_wpbb_child_blog_media_version', '3.8.10.48' );
             clean_post_cache( $post_id );
         }
     }
@@ -794,7 +814,7 @@ if ( ! function_exists( 'wpbb_child_381045_repair_demo_pages' ) ) {
                 wp_update_post( array( 'ID' => $page_id, 'post_content' => $repaired ) );
                 clean_post_cache( $page_id );
             }
-            update_post_meta( $page_id, '_wpbb_child_consistency_version', '3.8.10.46' );
+            update_post_meta( $page_id, '_wpbb_child_consistency_version', '3.8.10.48' );
         }
     }
 }
@@ -897,7 +917,7 @@ if ( ! function_exists( 'wpbb_child_381045_gallery_frontend_config' ) ) {
 add_action( 'wp_footer', 'wpbb_child_381045_gallery_frontend_config', 1 );
 
 /**
- * v3.8.10.46 uses a resumable worker. The former admin_init migration could
+ * v3.8.10.48 uses a resumable worker. The former admin_init migration could
  * import and regenerate dozens of images in one request, which was capable of
  * exhausting PHP memory or the request timeout on the WordPress dashboard.
  */
@@ -941,7 +961,7 @@ if ( ! function_exists( 'wpbb_child_381046_asset_jobs' ) ) {
 if ( ! function_exists( 'wpbb_child_381046_default_state' ) ) {
     function wpbb_child_381046_default_state( $config ) {
         return array(
-            'version' => '3.8.10.46',
+            'version' => '3.8.10.48',
             'signature' => md5( wp_json_encode( $config ) ),
             'stage' => 'assets',
             'asset_offset' => 0,
@@ -959,7 +979,7 @@ if ( ! function_exists( 'wpbb_child_381046_get_state' ) ) {
     function wpbb_child_381046_get_state( $config ) {
         $default = wpbb_child_381046_default_state( $config );
         $state = get_option( wpbb_child_381046_state_key(), array() );
-        if ( ! is_array( $state ) || ( $state['signature'] ?? '' ) !== $default['signature'] || ( $state['version'] ?? '' ) !== '3.8.10.46' ) return $default;
+        if ( ! is_array( $state ) || ( $state['signature'] ?? '' ) !== $default['signature'] || ( $state['version'] ?? '' ) !== '3.8.10.48' ) return $default;
         return array_merge( $default, $state );
     }
 }
@@ -978,10 +998,11 @@ if ( ! function_exists( 'wpbb_child_381046_schedule' ) ) {
         if ( $reset ) {
             delete_option( wpbb_child_381046_state_key() );
             delete_option( wpbb_child_381046_done_key() );
+            delete_option( 'wpbb_child_381046_consistency_last_error_' . sanitize_key( get_stylesheet() ) );
         }
         $done = get_option( wpbb_child_381046_done_key(), array() );
         $signature = md5( wp_json_encode( $config ) );
-        if ( is_array( $done ) && ( $done['version'] ?? '' ) === '3.8.10.46' && ( $done['signature'] ?? '' ) === $signature ) return;
+        if ( is_array( $done ) && ( $done['version'] ?? '' ) === '3.8.10.48' && ( $done['signature'] ?? '' ) === $signature ) return;
         if ( ! wp_next_scheduled( 'wpbb_child_381046_consistency_batch' ) ) {
             wp_schedule_single_event( time() + 5, 'wpbb_child_381046_consistency_batch' );
         }
@@ -1078,7 +1099,7 @@ if ( ! function_exists( 'wpbb_child_381046_run_sector_batch' ) ) {
                 update_post_meta( $post_id, '_wp_theme_item_gallery_ids', $gallery_ids );
                 update_post_meta( $post_id, '_wp_theme_gallery_ids', implode( ',', $gallery_ids ) );
                 update_post_meta( $post_id, '_wp_theme_item_gallery', implode( ',', $gallery_ids ) );
-                update_post_meta( $post_id, '_wpbb_child_gallery_version', '3.8.10.46' );
+                update_post_meta( $post_id, '_wpbb_child_gallery_version', '3.8.10.48' );
             }
             clean_post_cache( $post_id );
             $state['processed']++;
@@ -1131,7 +1152,7 @@ if ( ! function_exists( 'wpbb_child_381046_run_blog_batch' ) ) {
             $id = $attachments[ ( $base_index + $batch_index ) % count( $attachments ) ];
             set_post_thumbnail( $post_id, $id );
             update_post_meta( $post_id, '_wpbb_child_sector_media_theme', $config['key'] );
-            update_post_meta( $post_id, '_wpbb_child_blog_media_version', '3.8.10.46' );
+            update_post_meta( $post_id, '_wpbb_child_blog_media_version', '3.8.10.48' );
             clean_post_cache( $post_id );
             $state['processed']++;
         }
@@ -1164,7 +1185,7 @@ if ( ! function_exists( 'wpbb_child_381046_run_page_batch' ) ) {
                 $repaired = wpbb_child_381045_replace_page_images( $repaired, $config, $page_id );
                 if ( $repaired !== $content ) wp_update_post( array( 'ID' => $page_id, 'post_content' => $repaired ) );
             }
-            update_post_meta( $page_id, '_wpbb_child_consistency_version', '3.8.10.46' );
+            update_post_meta( $page_id, '_wpbb_child_consistency_version', '3.8.10.48' );
             clean_post_cache( $page_id );
             $state['processed']++;
         }
@@ -1223,7 +1244,7 @@ if ( ! function_exists( 'wpbb_child_381046_consistency_batch' ) ) {
             } elseif ( 'verify' === $state['stage'] ) {
                 if ( wpbb_child_381046_verify( $config ) ) {
                     $state['stage'] = 'done';
-                    update_option( wpbb_child_381046_done_key(), array( 'version' => '3.8.10.46', 'signature' => $state['signature'], 'completed' => time() ), false );
+                    update_option( wpbb_child_381046_done_key(), array( 'version' => '3.8.10.48', 'signature' => $state['signature'], 'completed' => time() ), false );
                 } else {
                     $state['stage'] = 'assets';
                     $state['asset_offset'] = 0;
@@ -1231,6 +1252,7 @@ if ( ! function_exists( 'wpbb_child_381046_consistency_batch' ) ) {
                 }
             }
             wpbb_child_381046_save_state( $state );
+            delete_option( 'wpbb_child_381046_consistency_last_error_' . sanitize_key( get_stylesheet() ) );
         } catch ( Throwable $error ) {
             update_option( 'wpbb_child_381046_consistency_last_error_' . sanitize_key( get_stylesheet() ), sanitize_text_field( $error->getMessage() ), false );
         }

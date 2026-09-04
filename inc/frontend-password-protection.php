@@ -219,13 +219,42 @@ if ( ! function_exists( 'wpbb_child_demo_save_protection' ) ) {
 }
 add_action( 'admin_post_wpbb_child_demo_save_protection', 'wpbb_child_demo_save_protection' );
 
+if ( ! function_exists( 'wpbb_child_demo_protection_admin_styles' ) ) {
+    /** Print the General-tab styles outside ACF message markup so tags are not stripped into visible CSS text. */
+    function wpbb_child_demo_protection_admin_styles() {
+        $page = isset( $_GET['page'] ) ? sanitize_key( wp_unslash( $_GET['page'] ) ) : '';
+        if ( 'wp-theme-settings' !== $page || ! current_user_can( 'manage_options' ) ) return;
+        ?>
+        <style id="wpbb-demo-protection-settings-css">
+        .wpbb-demo-protection-settings{box-sizing:border-box;margin:18px 0 24px;padding:22px 24px;border:1px solid #cdd6e3;border-left:4px solid #253e5b;border-radius:12px;background:#fff;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+        .wpbb-demo-protection-settings+.wpbb-demo-protection-settings{margin-top:20px}
+        .wpbb-demo-protection-settings__heading{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 8px}
+        .wpbb-demo-protection-settings__status{display:inline-flex;align-items:center;min-height:24px;padding:2px 9px;border-radius:999px;background:#e8f3ec;color:#126b35;font-size:12px;font-weight:700}
+        .wpbb-demo-protection-settings__status.is-disabled{background:#f1f1f1;color:#50575e}
+        .wpbb-demo-protection-settings p{max-width:920px}
+        .wpbb-demo-protection-settings__saved{color:#16813b;font-weight:700}
+        .wpbb-demo-protection-settings__form{display:grid;grid-template-columns:minmax(230px,.8fr) minmax(300px,1.2fr) auto;gap:16px;align-items:end;max-width:1120px;margin-top:18px}
+        .wpbb-demo-protection-settings__toggle{display:flex;gap:9px;align-items:center;min-height:42px;margin:0;padding:9px 11px;border:1px solid #dcdcde;border-radius:8px;background:#f8f9fa}
+        .wpbb-demo-protection-settings__toggle input{margin:0}
+        .wpbb-demo-protection-settings__password{display:block;min-width:0;margin:0}
+        .wpbb-demo-protection-settings__password strong{display:block;margin-bottom:6px}
+        .wpbb-demo-protection-settings__password input{box-sizing:border-box;width:100%;max-width:none;min-height:42px}
+        .wpbb-demo-protection-settings__form>.button{min-height:42px;white-space:nowrap;justify-self:start}
+        .wpbb-demo-protection-settings form{margin:0}
+        @media(max-width:1100px){.wpbb-demo-protection-settings__form{grid-template-columns:minmax(220px,.8fr) minmax(280px,1.2fr)}.wpbb-demo-protection-settings__form>.button{grid-column:1/-1}}
+        @media(max-width:782px){.wpbb-demo-protection-settings{padding:18px}.wpbb-demo-protection-settings__form{grid-template-columns:1fr}.wpbb-demo-protection-settings__form>.button{grid-column:auto}}
+        </style>
+        <?php
+    }
+}
+add_action( 'admin_head', 'wpbb_child_demo_protection_admin_styles', 90 );
+
 if ( ! function_exists( 'wpbb_child_demo_protection_settings_markup' ) ) {
     function wpbb_child_demo_protection_settings_markup() {
         $enabled = wpbb_child_demo_protection_enabled();
         $saved = isset( $_GET['wpbb_protection_saved'] ) && '1' === sanitize_text_field( wp_unslash( $_GET['wpbb_protection_saved'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
         ob_start();
         ?>
-        <style>.wpbb-demo-protection-settings{margin:16px 0 24px;padding:22px;border:1px solid #cdd6e3;border-left:4px solid #253e5b;border-radius:10px;background:#fff}.wpbb-demo-protection-settings__heading{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 8px}.wpbb-demo-protection-settings__status{display:inline-flex;align-items:center;min-height:24px;padding:2px 9px;border-radius:999px;background:#e8f3ec;color:#126b35;font-size:12px;font-weight:700}.wpbb-demo-protection-settings__status.is-disabled{background:#f1f1f1;color:#50575e}.wpbb-demo-protection-settings p{max-width:900px}.wpbb-demo-protection-settings__saved{color:#16813b;font-weight:700}.wpbb-demo-protection-settings__form{display:grid;grid-template-columns:minmax(260px,360px) minmax(280px,430px) auto;gap:16px;align-items:end;max-width:1080px;margin-top:18px}.wpbb-demo-protection-settings__toggle{display:flex;gap:9px;align-items:center;min-height:40px}.wpbb-demo-protection-settings__password strong{display:block;margin-bottom:6px}.wpbb-demo-protection-settings__password input{width:100%}@media(max-width:960px){.wpbb-demo-protection-settings__form{grid-template-columns:1fr}.wpbb-demo-protection-settings__form .button{justify-self:start}}</style>
         <section class="wpbb-demo-protection-settings" aria-labelledby="wpbb-demo-protection-title">
             <h2 class="wpbb-demo-protection-settings__heading" id="wpbb-demo-protection-title">
                 <?php esc_html_e( 'Frontend Password Protection', 'wp-theme' ); ?>

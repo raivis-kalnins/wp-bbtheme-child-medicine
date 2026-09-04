@@ -1,12 +1,16 @@
-## 3.8.10.46
+## 3.8.10.48
 
-- Replaces dashboard-blocking sector-media migrations with a resumable small-batch worker.
-- Restores active-sector page, managed Blog, directory and gallery images after child-theme switching.
-- Keeps frontend password controls inside **Settings → Theme Settings → General**.
-- Places compact thumbnail navigation inside the bottom of the large gallery image and retains the full-screen modal.
-- Includes WordPress 6.7+ translation timing and ACF initialization compatibility fixes supplied by the parent theme and WP BBuilder update.
+- Fixes the Theme Settings frontend-protection panel so its CSS is loaded in the admin head instead of appearing as visible text.
+- Makes sector media repair load the WordPress image API safely before generating attachment metadata.
+- Refines shared card, directory, gallery and responsive alignment.
 
-# WP BBTheme Medicine 3.8.10.46
+## 3.8.10.47
+
+- More compact and consistent section spacing, cards and responsive layouts.
+- Smaller in-frame gallery thumbnail pagination and improved light/dark contrast.
+- Reliable child-owned WooCommerce product shells where the theme includes commerce.
+
+# WP BBTheme Medicine 3.8.10.48
 Non-WooCommerce medical directory, doctor booking and pharmacy quote starter built on WP BBTheme Core and WP BBuilder.
 
 ## v3.7 Pharmacy

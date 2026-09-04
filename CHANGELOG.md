@@ -1,3 +1,14 @@
+# Changelog
+
+## 3.8.10.48
+- Fixed the Theme Settings General-tab password panel so its CSS is loaded as admin CSS rather than displayed as text.
+- Hardened the resumable sector-media repair against unavailable WordPress image-admin helpers and clears stale repair errors after a successful batch.
+- Refined shared card density, directory alignment, responsive spacing, dark-mode contrast and compact in-image gallery pagination.
+
+## 3.8.10.47
+- Child-only layout density, spacing, contrast and gallery refinements.
+- Improved WooCommerce single-product template reliability where applicable.
+
 ## 3.8.10.46
 - Prevents heavy legacy sector-image migrations from running synchronously in the WordPress dashboard; a resumable small-batch worker now performs repairs safely.
 - Keeps frontend password protection inside **Theme Settings → General**.
