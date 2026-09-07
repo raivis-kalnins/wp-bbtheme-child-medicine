@@ -122,7 +122,7 @@ add_action('wp_theme_seed_sector_pages','wpbb_medicine_seed_doctors',10);
 
 function wpbb_medicine_seed_pages($profile){
     if(($profile['id']??'')!=='medicine')return;
-    $pages=array('appointments'=>array(__('Book an appointment','wp-bbtheme-child-medicine'),'<!-- wp:group {"className":"medicine-booking-section"} --><div class="wp-block-group medicine-booking-section"><!-- wp:wpbb/row {"containerClass":"container"} --><!-- wp:wpbb/column {"xs":12} --><!-- wp:wpbb/booking-calendar {"title":"Book an appointment","intro":"Choose a doctor, service, date and time. We will confirm the request by email.","providerPostType":"doctor","providerLabel":"Doctor","services":"Consultation|30|85\\nFollow-up|20|55\\nVideo consultation|30|75","startTime":"09:00","endTime":"17:00","slotMinutes":30} /--><!-- /wp:wpbb/column --><!-- /wp:wpbb/row --></div><!-- /wp:group -->'));
+    $pages=array('appointments'=>array(__('Book an appointment','wp-bbtheme-child-medicine'),'<!-- wp:wpbb/bootstrap-div {"containerClass":"","utilityClasses":"medicine-booking-section","className":"wpbb-v62-section"} --><!-- wp:wpbb/row {"containerClass":"container"} --><!-- wp:wpbb/column {"xs":12} --><!-- wp:wpbb/booking-calendar {"title":"Book an appointment","intro":"Choose a doctor, service, date and time. We will confirm the request by email.","providerPostType":"doctor","providerLabel":"Doctor","services":"Consultation|30|85\\nFollow-up|20|55\\nVideo consultation|30|75","startTime":"09:00","endTime":"17:00","slotMinutes":30} /--><!-- /wp:wpbb/column --><!-- /wp:wpbb/row --><!-- /wp:wpbb/bootstrap-div -->'));
     foreach($pages as $slug=>$row){$existing=get_page_by_path($slug);$args=array('post_type'=>'page','post_status'=>'publish','post_title'=>$row[0],'post_name'=>$slug,'post_content'=>$row[1]);if($existing){$args['ID']=$existing->ID;wp_update_post($args);}else wp_insert_post($args);}
 }
 add_action('wp_theme_seed_sector_pages','wpbb_medicine_seed_pages',20);
@@ -140,7 +140,7 @@ function wpbb_medicine_doctor_card($id){
     $spec=wp_get_post_terms($id,'doctor_speciality',array('fields'=>'names'));$loc=wp_get_post_terms($id,'doctor_location',array('fields'=>'names'));$cred=get_post_meta($id,'_doctor_credentials',true);$exp=get_post_meta($id,'_doctor_experience',true);$price=get_post_meta($id,'_doctor_consultation_price',true);$image=get_the_post_thumbnail_url($id,'large');$media=function_exists('wp_theme_item_gallery_card_inner')?wp_theme_item_gallery_card_inner($id,'large',4):($image?'<img src="'.esc_url($image).'" alt="'.esc_attr(get_the_title($id)).'" loading="lazy">':'');
     return '<article class="medicine-doctor-card motion-fade-up"><a class="medicine-doctor-card__media" href="'.esc_url(get_permalink($id)).'">'.$media.'<span class="medicine-doctor-card__badge">'.esc_html($cred?:__('Clinician','wp-bbtheme-child-medicine')).'</span></a><div class="medicine-doctor-card__body"><div class="medicine-doctor-card__speciality">'.esc_html($spec[0]??'').'</div><h3><a href="'.esc_url(get_permalink($id)).'">'.esc_html(get_the_title($id)).'</a></h3><div class="medicine-doctor-card__meta"><span>'.esc_html($loc[0]??'').'</span>'.($exp?'<span>'.absint($exp).' '.esc_html__('years experience','wp-bbtheme-child-medicine').'</span>':'').($price?'<span>'.esc_html__('From','wp-bbtheme-child-medicine').' '.esc_html($price).'</span>':'').'</div><div class="medicine-doctor-card__actions"><a class="btn btn-outline-primary" href="'.esc_url(get_permalink($id)).'">'.esc_html__('Profile','wp-bbtheme-child-medicine').'</a><a class="btn btn-primary" href="'.esc_url(add_query_arg('doctor',$id,wp_theme_demo_page_url('appointments'))).'">'.esc_html__('Book','wp-bbtheme-child-medicine').'</a></div></div></article>';
 }
-function wpbb_medicine_directory_results($request=array()){$q=new WP_Query(wpbb_medicine_doctor_query_args($request));$html='<div class="row medicine-doctor-grid">';if($q->have_posts()){while($q->have_posts()){$q->the_post();$html.='<div class="col-12 col-md-6 col-xl-4">'.wpbb_medicine_doctor_card(get_the_ID()).'</div>';}}else{$html.='<div class="col-12"><div class="alert alert-light">'.esc_html__('No doctors match those filters. Try another speciality or location.','wp-bbtheme-child-medicine').'</div></div>';}wp_reset_postdata();return $html.'</div>';}
+function wpbb_medicine_directory_results($request=array()){$q=new WP_Query(wpbb_medicine_doctor_query_args($request));$html='<div class="row medicine-doctor-grid">';if($q->have_posts()){while($q->have_posts()){$q->the_post();$html.='<div class="col-12 col-md-6 col-xl-3">'.wpbb_medicine_doctor_card(get_the_ID()).'</div>';}}else{$html.='<div class="col-12"><div class="alert alert-light">'.esc_html__('No doctors match those filters. Try another speciality or location.','wp-bbtheme-child-medicine').'</div></div>';}wp_reset_postdata();return $html.'</div>';}
 function wpbb_medicine_doctor_directory_shortcode(){
     $specs=get_terms(array('taxonomy'=>'doctor_speciality','hide_empty'=>false));$locs=get_terms(array('taxonomy'=>'doctor_location','hide_empty'=>false));ob_start();?><section class="medicine-doctor-directory" data-doctor-directory><div class="container"><div class="medicine-doctor-toolbar"><form data-doctor-filter><div class="row g-3"><div class="col-12 col-lg-5"><label><?php esc_html_e('Doctor or keyword','wp-bbtheme-child-medicine'); ?></label><input type="search" name="search" placeholder="<?php esc_attr_e('Search doctors…','wp-bbtheme-child-medicine'); ?>"></div><div class="col-12 col-md-5 col-lg-3"><label><?php esc_html_e('Speciality','wp-bbtheme-child-medicine'); ?></label><select name="speciality"><option value=""><?php esc_html_e('All specialities','wp-bbtheme-child-medicine'); ?></option><?php foreach($specs as $term):?><option value="<?php echo esc_attr($term->slug); ?>"><?php echo esc_html($term->name); ?></option><?php endforeach;?></select></div><div class="col-12 col-md-5 col-lg-3"><label><?php esc_html_e('Location','wp-bbtheme-child-medicine'); ?></label><select name="location"><option value=""><?php esc_html_e('All locations','wp-bbtheme-child-medicine'); ?></option><?php foreach($locs as $term):?><option value="<?php echo esc_attr($term->slug); ?>"><?php echo esc_html($term->name); ?></option><?php endforeach;?></select></div><div class="col-12 col-md-2 col-lg-1 d-flex align-items-end"><button class="btn btn-primary w-100" type="submit" aria-label="<?php esc_attr_e('Filter doctors','wp-bbtheme-child-medicine'); ?>">→</button></div></div></form></div><div class="medicine-doctor-results" data-doctor-results aria-live="polite"><?php echo wpbb_medicine_directory_results(); ?></div></div></section><?php return ob_get_clean();
 }
@@ -341,7 +341,7 @@ add_filter( 'wp_theme_demo_navigation_items', 'wpbb_medicine_pharmacy_navigation
 function wpbb_medicine_pharmacy_home_section( $content, $profile ) {
     if ( ( $profile['id'] ?? '' ) !== 'medicine' ) return $content;
     $attrs = array( 'title'=>__( 'Pharmacy & health products', 'wp-bbtheme-child-medicine' ), 'postsToShow'=>6, 'postType'=>'pharmacy_product', 'taxonomy'=>'pharmacy_category', 'sortBy'=>'menu_order', 'sortOrder'=>'ASC', 'showImage'=>true, 'showExcerpt'=>true, 'className'=>'medicine-pharmacy-catalogue' );
-    $section = '<!-- wp:group {"className":"wp-theme-section-shell medicine-pharmacy-section","layout":{"type":"default"}} --><div class="wp-block-group wp-theme-section-shell medicine-pharmacy-section"><!-- wp:wpbb/row {"containerClass":"container","customClasses":"wp-theme-section-heading align-items-end"} --><!-- wp:wpbb/column {"xs":12,"lg":8} -->' . wp_theme_demo_p( esc_html__( 'Clinic pharmacy','wp-bbtheme-child-medicine' ), 'wp-theme-sector-eyebrow' ) . wp_theme_demo_h( __( 'Health products with a quote-first pharmacy workflow.', 'wp-bbtheme-child-medicine' ), 2 ) . wp_theme_demo_p( esc_html__( 'Browse useful products, review the information and request a tailored quote instead of using a retail checkout.', 'wp-bbtheme-child-medicine' ) ) . '<!-- /wp:wpbb/column --><!-- wp:wpbb/column {"xs":12,"lg":4} -->' . wp_theme_demo_buttons( __( 'Browse pharmacy', 'wp-bbtheme-child-medicine' ), wpbb_medicine_pharmacy_archive_url() ) . '<!-- /wp:wpbb/column --><!-- /wp:wpbb/row --><!-- wp:wpbb/row {"containerClass":"container"} --><!-- wp:wpbb/column {"xs":12} --><!-- wp:wpbb/catalogue ' . wp_theme_demo_block_attrs( $attrs ) . ' /--><!-- /wp:wpbb/column --><!-- /wp:wpbb/row --></div><!-- /wp:group -->';
+    $section = '<!-- wp:wpbb/bootstrap-div {"containerClass":"","utilityClasses":"wp-theme-section-shell medicine-pharmacy-section","className":"wpbb-v62-section"} --><!-- wp:wpbb/row {"containerClass":"container","customClasses":"wp-theme-section-heading align-items-end"} --><!-- wp:wpbb/column {"xs":12,"lg":8} -->' . wp_theme_demo_p( esc_html__( 'Clinic pharmacy','wp-bbtheme-child-medicine' ), 'wp-theme-sector-eyebrow' ) . wp_theme_demo_h( __( 'Health products with a quote-first pharmacy workflow.', 'wp-bbtheme-child-medicine' ), 2 ) . wp_theme_demo_p( esc_html__( 'Browse useful products, review the information and request a tailored quote instead of using a retail checkout.', 'wp-bbtheme-child-medicine' ) ) . '<!-- /wp:wpbb/column --><!-- wp:wpbb/column {"xs":12,"lg":4} -->' . wp_theme_demo_buttons( __( 'Browse pharmacy', 'wp-bbtheme-child-medicine' ), wpbb_medicine_pharmacy_archive_url() ) . '<!-- /wp:wpbb/column --><!-- /wp:wpbb/row --><!-- wp:wpbb/row {"containerClass":"container"} --><!-- wp:wpbb/column {"xs":12} --><!-- wp:wpbb/catalogue ' . wp_theme_demo_block_attrs( $attrs ) . ' /--><!-- /wp:wpbb/column --><!-- /wp:wpbb/row --><!-- /wp:wpbb/bootstrap-div -->';
     return $content . $section;
 }
 add_filter( 'wp_theme_demo_extra_home_sections', 'wpbb_medicine_pharmacy_home_section', 35, 2 );
@@ -710,35 +710,35 @@ if ( ! function_exists( 'wpbb_child_demo_integrity_guard_v381029' ) ) {
         $services = ! empty( $profile['services'] ) && is_array( $profile['services'] ) ? array_slice( $profile['services'], 0, 4 ) : array();
         $stats = ! empty( $profile['stats'] ) && is_array( $profile['stats'] ) ? array_slice( $profile['stats'], 0, 4 ) : array();
 
-        $out = '<!-- wp:group {"className":"wp-theme-section-shell wp-theme-sector-hero wp-theme-demo-repair","layout":{"type":"default"}} --><div class="wp-block-group wp-theme-section-shell wp-theme-sector-hero wp-theme-demo-repair"><!-- wp:wpbb/row {"containerClass":"container","customClasses":"align-items-center"} --><!-- wp:wpbb/column {"xs":12,"lg":6} --><p class="wp-theme-sector-eyebrow">' . esc_html( $eyebrow ) . '</p><h1>' . esc_html( $title ) . '</h1><p class="wp-theme-sector-lead">' . esc_html( $intro ) . '</p><div class="wp-theme-demo-buttons"><a class="btn btn-primary" href="' . esc_url( $primary_url ) . '">' . esc_html( $primary_label ) . '</a><a class="btn btn-outline-primary" href="' . esc_url( $secondary_url ) . '">' . esc_html( $secondary_label ) . '</a></div><!-- /wp:wpbb/column -->';
+        $out = '<!-- wp:wpbb/bootstrap-div {"containerClass":"","utilityClasses":"wp-theme-section-shell wp-theme-sector-hero wp-theme-demo-repair","className":"wpbb-v62-section"} --><!-- wp:wpbb/row {"containerClass":"container","customClasses":"align-items-center"} --><!-- wp:wpbb/column {"xs":12,"lg":6} --><p class="wp-theme-sector-eyebrow">' . esc_html( $eyebrow ) . '</p><h1>' . esc_html( $title ) . '</h1><p class="wp-theme-sector-lead">' . esc_html( $intro ) . '</p><div class="wp-theme-demo-buttons"><a class="btn btn-primary" href="' . esc_url( $primary_url ) . '">' . esc_html( $primary_label ) . '</a><a class="btn btn-outline-primary" href="' . esc_url( $secondary_url ) . '">' . esc_html( $secondary_label ) . '</a></div><!-- /wp:wpbb/column -->';
         if ( $hero_image ) $out .= '<!-- wp:wpbb/column {"xs":12,"lg":6} --><figure class="wp-theme-sector-page-image"><img src="' . $hero_image . '" alt="" loading="eager" decoding="async"></figure><!-- /wp:wpbb/column -->';
-        $out .= '<!-- /wp:wpbb/row --></div><!-- /wp:group -->';
+        $out .= '<!-- /wp:wpbb/row --><!-- /wp:wpbb/bootstrap-div -->';
 
         if ( 'automotive' === ( $profile['id'] ?? '' ) ) {
-            $out .= '<!-- wp:group {"className":"wp-theme-section-shell wpbb-automotive-finder-section","layout":{"type":"default"}} --><div class="wp-block-group wp-theme-section-shell wpbb-automotive-finder-section" id="finder"><!-- wp:wpbb/row {"containerClass":"container"} --><!-- wp:wpbb/column {"xs":12} --><!-- wp:wpbb/sector-finder {"context":"automotive","limit":8} /--><!-- /wp:wpbb/column --><!-- /wp:wpbb/row --></div><!-- /wp:group -->';
+            $out .= '<!-- wp:wpbb/bootstrap-div {"containerClass":"","utilityClasses":"wp-theme-section-shell wpbb-automotive-finder-section","className":"wpbb-v62-section"} --><!-- wp:wpbb/row {"containerClass":"container"} --><!-- wp:wpbb/column {"xs":12} --><!-- wp:wpbb/sector-finder {"context":"automotive","limit":8} /--><!-- /wp:wpbb/column --><!-- /wp:wpbb/row --><!-- /wp:wpbb/bootstrap-div -->';
         }
 
-        $out .= '<!-- wp:group {"className":"wp-theme-section-shell wp-theme-services-section","layout":{"type":"default"}} --><div class="wp-block-group wp-theme-section-shell wp-theme-services-section"><!-- wp:wpbb/row {"containerClass":"container"} --><!-- wp:wpbb/column {"xs":12} --><p class="wp-theme-sector-eyebrow">' . esc_html( (string) ( $profile['services_eyebrow'] ?? __( 'Services', 'wp-theme' ) ) ) . '</p><h2>' . esc_html( $services_heading ) . '</h2><!-- wp:wpbb/row {"gutterX":"gx-4","gutterY":"gy-4"} -->';
+        $out .= '<!-- wp:wpbb/bootstrap-div {"containerClass":"","utilityClasses":"wp-theme-section-shell wp-theme-services-section","className":"wpbb-v62-section"} --><!-- wp:wpbb/row {"containerClass":"container"} --><!-- wp:wpbb/column {"xs":12} --><p class="wp-theme-sector-eyebrow">' . esc_html( (string) ( $profile['services_eyebrow'] ?? __( 'Services', 'wp-theme' ) ) ) . '</p><h2>' . esc_html( $services_heading ) . '</h2><!-- wp:wpbb/row {"gutterX":"gx-4","gutterY":"gy-4"} -->';
         foreach ( $services as $service ) {
             $service_title = is_array( $service ) ? (string) ( $service[0] ?? '' ) : '';
             $service_text = is_array( $service ) ? (string) ( $service[1] ?? '' ) : '';
             if ( '' === trim( $service_title ) ) continue;
             $out .= '<!-- wp:wpbb/column {"xs":12,"md":6,"lg":3} --><article class="wp-theme-sector-card"><h3>' . esc_html( $service_title ) . '</h3><p>' . esc_html( $service_text ) . '</p></article><!-- /wp:wpbb/column -->';
         }
-        $out .= '<!-- /wp:wpbb/row --><!-- /wp:wpbb/column --><!-- /wp:wpbb/row --></div><!-- /wp:group -->';
+        $out .= '<!-- /wp:wpbb/row --><!-- /wp:wpbb/column --><!-- /wp:wpbb/row --><!-- /wp:wpbb/bootstrap-div -->';
 
-        $out .= '<!-- wp:group {"className":"wp-theme-section-shell wp-theme-about-section","layout":{"type":"default"}} --><div class="wp-block-group wp-theme-section-shell wp-theme-about-section"><!-- wp:wpbb/row {"containerClass":"container","customClasses":"align-items-center"} -->';
+        $out .= '<!-- wp:wpbb/bootstrap-div {"containerClass":"","utilityClasses":"wp-theme-section-shell wp-theme-about-section","className":"wpbb-v62-section"} --><!-- wp:wpbb/row {"containerClass":"container","customClasses":"align-items-center"} -->';
         if ( $about_image ) $out .= '<!-- wp:wpbb/column {"xs":12,"lg":6} --><figure class="wp-theme-sector-page-image"><img src="' . $about_image . '" alt="" loading="lazy" decoding="async"></figure><!-- /wp:wpbb/column -->';
-        $out .= '<!-- wp:wpbb/column {"xs":12,"lg":6} --><p class="wp-theme-sector-eyebrow">' . esc_html( (string) ( $profile['about_eyebrow'] ?? __( 'About', 'wp-theme' ) ) ) . '</p><h2>' . esc_html( $about_title ) . '</h2><p class="wp-theme-sector-lead">' . esc_html( $about_text ) . '</p><!-- /wp:wpbb/column --><!-- /wp:wpbb/row --></div><!-- /wp:group -->';
+        $out .= '<!-- wp:wpbb/column {"xs":12,"lg":6} --><p class="wp-theme-sector-eyebrow">' . esc_html( (string) ( $profile['about_eyebrow'] ?? __( 'About', 'wp-theme' ) ) ) . '</p><h2>' . esc_html( $about_title ) . '</h2><p class="wp-theme-sector-lead">' . esc_html( $about_text ) . '</p><!-- /wp:wpbb/column --><!-- /wp:wpbb/row --><!-- /wp:wpbb/bootstrap-div -->';
 
         if ( $stats ) {
-            $out .= '<!-- wp:group {"className":"wp-theme-section-shell wp-theme-sector-proof","layout":{"type":"default"}} --><div class="wp-block-group wp-theme-section-shell wp-theme-sector-proof"><!-- wp:wpbb/row {"containerClass":"container","gutterX":"gx-3","gutterY":"gy-3"} -->';
+            $out .= '<!-- wp:wpbb/bootstrap-div {"containerClass":"","utilityClasses":"wp-theme-section-shell wp-theme-sector-proof","className":"wpbb-v62-section"} --><!-- wp:wpbb/row {"containerClass":"container","gutterX":"gx-3","gutterY":"gy-3"} -->';
             foreach ( $stats as $stat ) {
                 $number = is_array( $stat ) ? (string) ( $stat[0] ?? '' ) : '';
                 $label = is_array( $stat ) ? (string) ( $stat[1] ?? '' ) : '';
                 $out .= '<!-- wp:wpbb/column {"xs":6,"lg":3} --><div class="wp-theme-sector-proof__item"><h3>' . esc_html( $number ) . '</h3><p>' . esc_html( $label ) . '</p></div><!-- /wp:wpbb/column -->';
             }
-            $out .= '<!-- /wp:wpbb/row --></div><!-- /wp:group -->';
+            $out .= '<!-- /wp:wpbb/row --><!-- /wp:wpbb/bootstrap-div -->';
         }
 
         $out .= '<!-- wp:wpbb/cta-section {"title":"' . esc_attr( (string) ( $profile['cta_title'] ?? __( 'Ready to make it yours?', 'wp-theme' ) ) ) . '","titleTag":"h2","text":"' . esc_attr( (string) ( $profile['cta_text'] ?? $intro ) ) . '","buttonText":"' . esc_attr( $primary_label ) . '","buttonUrl":"' . esc_url( $primary_url ) . '","className":"wp-theme-home-cta wp-theme-home-cta--bbuilder"} /-->';
@@ -1096,3 +1096,69 @@ add_action( 'admin_init', 'wpbb_child_381043_refresh_media_once', 130 );
  * v3.8.10.45: shared rhythm, contrast, sector-media and gallery repair.
  */
 require_once __DIR__ . '/inc/sector-consistency.php';
+
+// v3.8.10.64 shared BBuilder/demo consistency layer.
+require_once get_stylesheet_directory() . '/inc/bbuilder-system-v62.php';
+
+/**
+ * v3.8.10.64 PWA endpoint hardening.
+ *
+ * The parent theme links to ?wpbb-pwa=manifest and registers
+ * ?wpbb-pwa=service-worker. Serve those endpoints before the normal template
+ * loader so browsers always receive the expected MIME type and valid payload.
+ * The service worker intentionally has no fetch handler: this prevents stale
+ * worker-cached ES modules from causing Chromium cross-world preload warnings.
+ */
+if ( ! function_exists( 'wpbb_child_381063_serve_pwa_endpoint' ) ) {
+    function wpbb_child_381063_serve_pwa_endpoint() {
+        if ( empty( $_GET['wpbb-pwa'] ) ) return;
+        $mode = sanitize_key( wp_unslash( $_GET['wpbb-pwa'] ) );
+        if ( ! in_array( $mode, array( 'manifest', 'service-worker' ), true ) ) return;
+
+        while ( ob_get_level() ) {
+            @ob_end_clean();
+        }
+        nocache_headers();
+        header( 'X-Content-Type-Options: nosniff' );
+
+        if ( 'manifest' === $mode ) {
+            header( 'Content-Type: application/manifest+json; charset=UTF-8' );
+            $name = trim( (string) get_bloginfo( 'name' ) );
+            if ( '' === $name ) $name = 'WP Base';
+            $scope = (string) wp_parse_url( home_url( '/' ), PHP_URL_PATH );
+            if ( '' === $scope ) $scope = '/';
+            $icons = array();
+            foreach ( array( 192, 512 ) as $size ) {
+                $file = get_stylesheet_directory() . '/assets/icons/icon-' . $size . '.png';
+                if ( is_readable( $file ) ) {
+                    $icons[] = array(
+                        'src' => get_stylesheet_directory_uri() . '/assets/icons/icon-' . $size . '.png',
+                        'sizes' => $size . 'x' . $size,
+                        'type' => 'image/png',
+                        'purpose' => 'any maskable',
+                    );
+                }
+            }
+            echo wp_json_encode( array(
+                'name' => $name,
+                'short_name' => function_exists( 'mb_substr' ) ? mb_substr( $name, 0, 24 ) : substr( $name, 0, 24 ),
+                'start_url' => home_url( '/' ),
+                'scope' => $scope,
+                'display' => 'standalone',
+                'background_color' => '#ffffff',
+                'theme_color' => '#3155D9',
+                'icons' => $icons,
+            ), JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
+            exit;
+        }
+
+        header( 'Content-Type: application/javascript; charset=UTF-8' );
+        header( 'Service-Worker-Allowed: /' );
+        echo "self.addEventListener('install',function(event){self.skipWaiting();});\n";
+        echo "self.addEventListener('activate',function(event){event.waitUntil((async function(){try{var keys=await caches.keys();await Promise.all(keys.filter(function(k){return /^(wpbb|wp-theme|wpbase)/i.test(k);}).map(function(k){return caches.delete(k);}));}catch(e){}await self.clients.claim();})());});\n";
+        exit;
+    }
+    add_action( 'template_redirect', 'wpbb_child_381063_serve_pwa_endpoint', -9999 );
+}
+// v3.8.10.75 structural/media/Woo repair.
+require_once get_stylesheet_directory() . '/inc/v75-suite.php';

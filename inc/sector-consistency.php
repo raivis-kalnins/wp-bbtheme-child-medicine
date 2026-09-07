@@ -2,7 +2,7 @@
 /**
  * Cross-theme presentation and sector-media repair layer.
  *
- * Version 3.8.10.48 keeps demo content aligned after child-theme switching,
+ * Version 3.8.10.74 keeps demo content aligned after child-theme switching,
  * restores the active sector's bundled media, and provides the richer hotel
  * room gallery used on cards and single-room pages.
  */
@@ -561,7 +561,7 @@ if ( ! function_exists( 'wpbb_child_381045_sync_sector_media' ) ) {
                 update_post_meta( $post_id, '_wpbb_child_gallery_ids', $gallery_ids );
                 update_post_meta( $post_id, '_wp_theme_item_gallery_ids', $gallery_ids );
                 update_post_meta( $post_id, '_wp_theme_item_gallery', implode( ',', $gallery_ids ) );
-                update_post_meta( $post_id, '_wpbb_child_gallery_version', '3.8.10.48' );
+                update_post_meta( $post_id, '_wpbb_child_gallery_version', '3.8.10.74' );
             }
         }
     }
@@ -612,7 +612,7 @@ if ( ! function_exists( 'wpbb_child_381045_sync_blog_media' ) ) {
             $attachment_id = $attachments[ $index % count( $attachments ) ];
             set_post_thumbnail( $post_id, $attachment_id );
             update_post_meta( $post_id, '_wpbb_child_sector_media_theme', $config['key'] );
-            update_post_meta( $post_id, '_wpbb_child_blog_media_version', '3.8.10.48' );
+            update_post_meta( $post_id, '_wpbb_child_blog_media_version', '3.8.10.74' );
             clean_post_cache( $post_id );
         }
     }
@@ -814,7 +814,7 @@ if ( ! function_exists( 'wpbb_child_381045_repair_demo_pages' ) ) {
                 wp_update_post( array( 'ID' => $page_id, 'post_content' => $repaired ) );
                 clean_post_cache( $page_id );
             }
-            update_post_meta( $page_id, '_wpbb_child_consistency_version', '3.8.10.48' );
+            update_post_meta( $page_id, '_wpbb_child_consistency_version', '3.8.10.74' );
         }
     }
 }
@@ -917,7 +917,7 @@ if ( ! function_exists( 'wpbb_child_381045_gallery_frontend_config' ) ) {
 add_action( 'wp_footer', 'wpbb_child_381045_gallery_frontend_config', 1 );
 
 /**
- * v3.8.10.48 uses a resumable worker. The former admin_init migration could
+ * v3.8.10.74 uses a resumable worker. The former admin_init migration could
  * import and regenerate dozens of images in one request, which was capable of
  * exhausting PHP memory or the request timeout on the WordPress dashboard.
  */
@@ -961,7 +961,7 @@ if ( ! function_exists( 'wpbb_child_381046_asset_jobs' ) ) {
 if ( ! function_exists( 'wpbb_child_381046_default_state' ) ) {
     function wpbb_child_381046_default_state( $config ) {
         return array(
-            'version' => '3.8.10.48',
+            'version' => '3.8.10.74',
             'signature' => md5( wp_json_encode( $config ) ),
             'stage' => 'assets',
             'asset_offset' => 0,
@@ -979,7 +979,7 @@ if ( ! function_exists( 'wpbb_child_381046_get_state' ) ) {
     function wpbb_child_381046_get_state( $config ) {
         $default = wpbb_child_381046_default_state( $config );
         $state = get_option( wpbb_child_381046_state_key(), array() );
-        if ( ! is_array( $state ) || ( $state['signature'] ?? '' ) !== $default['signature'] || ( $state['version'] ?? '' ) !== '3.8.10.48' ) return $default;
+        if ( ! is_array( $state ) || ( $state['signature'] ?? '' ) !== $default['signature'] || ( $state['version'] ?? '' ) !== '3.8.10.74' ) return $default;
         return array_merge( $default, $state );
     }
 }
@@ -1002,7 +1002,7 @@ if ( ! function_exists( 'wpbb_child_381046_schedule' ) ) {
         }
         $done = get_option( wpbb_child_381046_done_key(), array() );
         $signature = md5( wp_json_encode( $config ) );
-        if ( is_array( $done ) && ( $done['version'] ?? '' ) === '3.8.10.48' && ( $done['signature'] ?? '' ) === $signature ) return;
+        if ( is_array( $done ) && ( $done['version'] ?? '' ) === '3.8.10.74' && ( $done['signature'] ?? '' ) === $signature ) return;
         if ( ! wp_next_scheduled( 'wpbb_child_381046_consistency_batch' ) ) {
             wp_schedule_single_event( time() + 5, 'wpbb_child_381046_consistency_batch' );
         }
@@ -1099,7 +1099,7 @@ if ( ! function_exists( 'wpbb_child_381046_run_sector_batch' ) ) {
                 update_post_meta( $post_id, '_wp_theme_item_gallery_ids', $gallery_ids );
                 update_post_meta( $post_id, '_wp_theme_gallery_ids', implode( ',', $gallery_ids ) );
                 update_post_meta( $post_id, '_wp_theme_item_gallery', implode( ',', $gallery_ids ) );
-                update_post_meta( $post_id, '_wpbb_child_gallery_version', '3.8.10.48' );
+                update_post_meta( $post_id, '_wpbb_child_gallery_version', '3.8.10.74' );
             }
             clean_post_cache( $post_id );
             $state['processed']++;
@@ -1152,7 +1152,7 @@ if ( ! function_exists( 'wpbb_child_381046_run_blog_batch' ) ) {
             $id = $attachments[ ( $base_index + $batch_index ) % count( $attachments ) ];
             set_post_thumbnail( $post_id, $id );
             update_post_meta( $post_id, '_wpbb_child_sector_media_theme', $config['key'] );
-            update_post_meta( $post_id, '_wpbb_child_blog_media_version', '3.8.10.48' );
+            update_post_meta( $post_id, '_wpbb_child_blog_media_version', '3.8.10.74' );
             clean_post_cache( $post_id );
             $state['processed']++;
         }
@@ -1185,7 +1185,7 @@ if ( ! function_exists( 'wpbb_child_381046_run_page_batch' ) ) {
                 $repaired = wpbb_child_381045_replace_page_images( $repaired, $config, $page_id );
                 if ( $repaired !== $content ) wp_update_post( array( 'ID' => $page_id, 'post_content' => $repaired ) );
             }
-            update_post_meta( $page_id, '_wpbb_child_consistency_version', '3.8.10.48' );
+            update_post_meta( $page_id, '_wpbb_child_consistency_version', '3.8.10.74' );
             clean_post_cache( $page_id );
             $state['processed']++;
         }
@@ -1244,7 +1244,7 @@ if ( ! function_exists( 'wpbb_child_381046_consistency_batch' ) ) {
             } elseif ( 'verify' === $state['stage'] ) {
                 if ( wpbb_child_381046_verify( $config ) ) {
                     $state['stage'] = 'done';
-                    update_option( wpbb_child_381046_done_key(), array( 'version' => '3.8.10.48', 'signature' => $state['signature'], 'completed' => time() ), false );
+                    update_option( wpbb_child_381046_done_key(), array( 'version' => '3.8.10.74', 'signature' => $state['signature'], 'completed' => time() ), false );
                 } else {
                     $state['stage'] = 'assets';
                     $state['asset_offset'] = 0;

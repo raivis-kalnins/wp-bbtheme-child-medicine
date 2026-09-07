@@ -1,6 +1,26 @@
-# Changelog
+## 3.8.10.74
 
-## 3.8.10.48
+- Suite-wide spacing, directory-card and header-action alignment cleanup.
+- Sector media repair reruns against the current bundled assets.
+- WooCommerce catalogue, product, cart, checkout and account presentation now follows the active sector palette.
+- Managed demo products from other sectors are removed without touching unmarked real products.
+
+## 3.8.10.65
+
+## 3.8.10.67
+- Restored full-width demo section shells with an inner Bootstrap container.
+- Removed duplicate section margins/padding and aligned cards, media rows, stats and BBuilder catalogue grids.
+- Added responsive layout fixes shared by all sector demos.
+
+- Upgraded demo-page structure for WP BBuilder 5.6.4: Bootstrap Row/Column layout, Div wrappers only where needed, and reusable Icon Cards for simple feature cards.
+- Added one-time cleanup of legacy Group/Columns blocks, malformed demo row markup and duplicate top-level starter sections.
+- Normalised card heights, CTA/button alignment, form controls and shared WooCommerce archive/cart/checkout/account spacing.
+- Added matching editor-side system styles so demo pages are easier to understand and edit in Gutenberg.
+
+# Changelog
+- Fixed one-column demo card rows (notably Contact) so cards use full available column width.
+
+## 3.8.10.65
 - Fixed the Theme Settings General-tab password panel so its CSS is loaded as admin CSS rather than displayed as text.
 - Hardened the resumable sector-media repair against unavailable WordPress image-admin helpers and clears stale repair errors after a successful batch.
 - Refined shared card density, directory alignment, responsive spacing, dark-mode contrast and compact in-image gallery pagination.
@@ -266,4 +286,3 @@
 - Restored the cascade contract after the clean-SCSS refactor: shared parent geometry now uses low-specificity `:where()` selectors and loads before child presentation CSS.
 - Current-suite child CSS explicitly loads after the parent clean UI layer; sector spacing, borders, colours, mobile navigation and dark-mode rules can override the shared geometry again.
 - Added a restrained shared dark-mode baseline for parent-only use while preserving child-specific dark palettes.
-

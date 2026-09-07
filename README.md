@@ -1,4 +1,4 @@
-## 3.8.10.48
+## 3.8.10.65
 
 - Fixes the Theme Settings frontend-protection panel so its CSS is loaded in the admin head instead of appearing as visible text.
 - Makes sector media repair load the WordPress image API safely before generating attachment metadata.
@@ -10,7 +10,7 @@
 - Smaller in-frame gallery thumbnail pagination and improved light/dark contrast.
 - Reliable child-owned WooCommerce product shells where the theme includes commerce.
 
-# WP BBTheme Medicine 3.8.10.48
+# WP BBTheme Medicine 3.8.10.65
 Non-WooCommerce medical directory, doctor booking and pharmacy quote starter built on WP BBTheme Core and WP BBuilder.
 
 ## v3.7 Pharmacy
@@ -67,3 +67,6 @@ The command runs `node tools/build.mjs` and rebuilds the hashed CSS/JS manifest 
 - Shared alignment and dark-mode contrast fixes across service, solution, process, directory, blog and commerce cards.
 - Current child-theme media is reapplied after child-theme switches, including optimised AVIF/WebP files.
 - Visible slider/grid images are loaded deterministically and duplicate single-item summary text is removed.
+
+## 3.8.10.65 BBuilder demo system
+This release expects WP BBuilder 5.6.4+ and standardises demo editing around BBuilder Row/Column, Div, Icon Card, Swiper and selected native WordPress content blocks. Legacy Group/Columns demo markup is migrated automatically.

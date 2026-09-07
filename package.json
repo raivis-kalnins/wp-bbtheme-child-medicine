@@ -1,7 +1,7 @@
 {
   "name": "wp-bbtheme-child-medicine",
   "private": true,
-  "version": "3.8.10.48",
+  "version": "3.8.10.65",
   "type": "module",
   "scripts": {
     "dev": "node tools/build.mjs",
