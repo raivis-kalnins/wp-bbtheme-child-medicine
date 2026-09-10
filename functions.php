@@ -1162,3 +1162,39 @@ if ( ! function_exists( 'wpbb_child_381063_serve_pwa_endpoint' ) ) {
 }
 // v3.8.10.75 structural/media/Woo repair.
 require_once get_stylesheet_directory() . '/inc/v75-suite.php';
+
+// v3.8.10.81: keep interactive wp-admin saves/updates fast.
+require_once get_stylesheet_directory() . '/inc/v82-suite.php';
+require_once get_stylesheet_directory() . '/inc/admin-performance.php';
+
+// v3.8.10.83 premium Jobs-aligned sector presentation and multilingual managed-demo refresh.
+require_once get_stylesheet_directory() . '/inc/v83-premium-suite.php';
+// v3.8.10.97 final premium Jobs-aligned suite and mobile navigation.
+require_once get_stylesheet_directory() . '/inc/v97-premium-suite.php';
+
+
+/** 3.8.10.98 suite-wide layout/mobile finishing layer. */
+function wpbb_suite_v98_enqueue(){
+    $v = wp_get_theme()->get('Version');
+    wp_enqueue_style('wpbb-suite-v98', get_stylesheet_directory_uri() . '/assets/suite-v98.css', array(), $v);
+    wp_enqueue_script('wpbb-suite-v98', get_stylesheet_directory_uri() . '/assets/suite-v98.js', array(), $v, true);
+}
+add_action('wp_enqueue_scripts','wpbb_suite_v98_enqueue',999);
+
+// v3.8.10.99 final suite-wide grid, branding, hero and mobile finish.
+require_once get_stylesheet_directory() . '/inc/v99-finish.php';
+
+// v3.8.11.00 cookie ownership, hero/colour and mobile navigation finish.
+require_once get_stylesheet_directory() . '/inc/v100-finish.php';
+
+// v3.8.11.02 navigation, legal, colour and media correction.
+require_once get_stylesheet_directory() . '/inc/v101-finish.php';
+
+// v3.8.11.04 deterministic mobile navigation and WooCommerce/alignment finish.
+require_once get_stylesheet_directory() . '/inc/v104-finish.php';
+
+// v3.8.11.05 legal/contact grid, mobile drawer and WooCommerce template finish.
+require_once get_stylesheet_directory() . '/inc/v105-finish.php';
+
+// v3.8.11.07 final search, WooCommerce, Jobs captcha/grid and responsive repair.
+require_once get_stylesheet_directory() . '/inc/v107-finish.php';
