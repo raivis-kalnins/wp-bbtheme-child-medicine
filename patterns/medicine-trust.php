@@ -1,2 +1,20 @@
 <?php /** Title: Medicine patient trust / Slug: wp-bbtheme-child-medicine/trust / Categories: wp-patterns-main, wp-theme-current */ ?>
-<!-- wp:wpbb/bootstrap-div {"containerClass":"","utilityClasses":"medicine-trust-band wp-theme-section-shell"} --><!-- wp:wpbb/row {"containerClass":"container","gutterX":"gx-5","gutterY":"gy-4"} --><!-- wp:wpbb/column {"xs":12,"lg":5} --><!-- wp:paragraph {"className":"wp-theme-sector-eyebrow"} --><p class="wp-theme-sector-eyebrow">Patient-first</p><!-- /wp:paragraph --><!-- wp:heading --><h2 class="wp-block-heading">Clear information before, during and after your appointment.</h2><!-- /wp:heading --><!-- wp:paragraph --><p>Use editable Gutenberg sections for preparation guidance, insurance information, results and follow-up pathways.</p><!-- /wp:paragraph --><!-- /wp:wpbb/column --><!-- wp:wpbb/column {"xs":12,"lg":7} --><!-- wp:wpbb/row {"containerClass":"container-fluid","gutterX":"gx-3","gutterY":"gy-3"} --><?php foreach(array(array('Verified profiles','Credentials, languages, specialities and clinic locations.'),array('Accessible booking','Provider, service, date and time captured in one clear flow.'),array('Multilingual ready','Polylang switcher and translatable WordPress content.'),array('Privacy-minded','Only collect the details needed to request an appointment.')) as $row): ?><!-- wp:wpbb/column {"xs":12,"md":6} --><!-- wp:wpbb/bootstrap-div {"containerClass":"","utilityClasses":"medicine-trust-card"} --><!-- wp:heading {"level":3} --><h3 class="wp-block-heading"><?php echo esc_html($row[0]); ?></h3><!-- /wp:heading --><!-- wp:paragraph --><p><?php echo esc_html($row[1]); ?></p><!-- /wp:paragraph --><!-- /wp:wpbb/bootstrap-div --><!-- /wp:wpbb/column --><?php endforeach; ?><!-- /wp:wpbb/row --><!-- /wp:wpbb/column --><!-- /wp:wpbb/row --><!-- /wp:wpbb/bootstrap-div -->
+<!-- wp:wpbb/bootstrap-div {"containerClass":"","utilityClasses":"medicine-trust-band wp-theme-section-shell"} -->
+<!-- wp:wpbb/row {"containerClass":"container","customClasses":"wp-theme-section-heading"} -->
+<!-- wp:wpbb/column {"xs":12,"lg":8} -->
+<!-- wp:paragraph {"className":"wp-theme-sector-eyebrow"} --><p class="wp-theme-sector-eyebrow">Patient-first</p><!-- /wp:paragraph -->
+<!-- wp:heading --><h2 class="wp-block-heading">Clear information before, during and after your appointment.</h2><!-- /wp:heading -->
+<!-- wp:paragraph --><p>Use editable Gutenberg sections for preparation guidance, insurance information, results and follow-up pathways.</p><!-- /wp:paragraph -->
+<!-- /wp:wpbb/column -->
+<!-- /wp:wpbb/row -->
+<!-- wp:wpbb/row {"containerClass":"container","gutterX":"gx-4","gutterY":"gy-4","customClasses":"medicine-trust-grid"} -->
+<?php foreach(array(array('Verified profiles','Credentials, languages, specialities and clinic locations.'),array('Accessible booking','Provider, service, date and time captured in one clear flow.'),array('Multilingual ready','Polylang switcher and translatable WordPress content.'),array('Privacy-minded','Only collect the details needed to request an appointment.')) as $row): ?>
+<!-- wp:wpbb/column {"xs":12,"sm":6,"lg":3} -->
+<!-- wp:wpbb/bootstrap-div {"containerClass":"","utilityClasses":"medicine-trust-card"} -->
+<!-- wp:heading {"level":3} --><h3 class="wp-block-heading"><?php echo esc_html($row[0]); ?></h3><!-- /wp:heading -->
+<!-- wp:paragraph --><p><?php echo esc_html($row[1]); ?></p><!-- /wp:paragraph -->
+<!-- /wp:wpbb/bootstrap-div -->
+<!-- /wp:wpbb/column -->
+<?php endforeach; ?>
+<!-- /wp:wpbb/row -->
+<!-- /wp:wpbb/bootstrap-div -->

@@ -338,7 +338,7 @@ if ( ! function_exists( 'wpbb_child_v62_front_content' ) ) {
         // which then rendered BBuilder's stock text-only demo slides.
         $slides = wpbb_child_v63_demo_slides( $profile );
         $content = wpbb_child_v62_block( 'wpbb/row', array( 'containerClass' => 'container-fluid', 'customClasses' => 'wp-theme-sector-hero wpbb-v62-hero', 'gutterX' => 'gx-0', 'gutterY' => 'gy-0' ),
-            wpbb_child_v62_block( 'wpbb/column', array( 'xs' => 12 ), wpbb_child_v62_block( 'wpbb/swiper', array( 'slides' => $slides, 'slidesJson' => wp_json_encode( $slides, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ), 'slidesPerView' => 1, 'slidesTablet' => 1, 'slidesMobile' => 1, 'spaceBetween' => 0, 'speed' => 700, 'loop' => count( $slides ) > 1, 'rewind' => true, 'autoplay' => false, 'demoStyle' => 'hero', 'showPagination' => true, 'showNavigation' => true ), '', true ) )
+            wpbb_child_v62_block( 'wpbb/column', array( 'xs' => 12 ), wpbb_child_v62_block( 'wpbb/swiper', array( 'slides' => $slides, 'slidesJson' => wp_json_encode( $slides, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ), 'slidesPerView' => 1, 'slidesTablet' => 1, 'slidesMobile' => 1, 'spaceBetween' => 0, 'speed' => 700, 'loop' => count( $slides ) > 1, 'rewind' => true, 'autoplay' => true, 'autoplayDelay' => 8500, 'pauseOnHover' => true, 'demoStyle' => 'hero', 'showPagination' => true, 'showNavigation' => true ), '', true ) )
         );
 
         // Optional sector-specific dynamic block immediately after the hero.
@@ -549,7 +549,7 @@ if ( ! function_exists( 'wpbb_child_v62_repair_serialized_content' ) ) {
             return '<!-- wp:heading' . ( $attrs ? ' ' . wp_json_encode( $attrs, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) : '' ) . ' --><h' . $level . $m[3] . '>';
         }, $content );
         // Known legacy raw item that sat directly inside a BBuilder Column.
-        $content = preg_replace( '~<p class="wp-theme-partners-heading">(.*?)</p>~s', '<!-- wp:paragraph {"className":"wp-theme-partners-heading"} --><p class="wp-theme-partners-heading">$1</p><!-- /wp:paragraph -->', $content );
+        /* v115: partner heading wrapping is handled context-safely by wpbb_child_v115_normalize_partner_markup(). */
         return $content;
     }
 }

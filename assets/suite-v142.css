@@ -1,0 +1,514 @@
+/* Medicine 3.8.11.42 - sector finish on the exact Events v140 layout owner. */
+html body.wpbb-v140.wpbb-v142-theme-medicine{
+  --wpbb-m142-primary:#117b8b;
+  --wpbb-m142-primary-dark:#0b5865;
+  --wpbb-m142-secondary:#2c8f7d;
+  --wpbb-m142-accent:#56b8a6;
+  --wpbb-m142-accent-soft:#e0f4ef;
+  --wpbb-m142-ink:#10283a;
+  --wpbb-m142-copy:#607283;
+  --wpbb-m142-line:#d7e7e9;
+  --wpbb-m142-soft:#f5f9fa;
+  --wpbb-m142-soft-strong:#edf7f8;
+  --wpbb-m142-card:#fff;
+  --wpbb-m142-dark:#0c2332;
+  --wpbb-m142-radius:16px;
+  --wpbb-m142-gap:24px;
+  --wpbb-v140-accent:var(--wpbb-m142-primary);
+  --wpbb-v140-ink:var(--wpbb-m142-ink);
+  --wpbb-v140-navy:var(--wpbb-m142-ink);
+  --wpbb-v140-copy:var(--wpbb-m142-copy);
+  --wpbb-v140-line:var(--wpbb-m142-line);
+  --wpbb-v140-soft:var(--wpbb-m142-soft);
+  --sector-primary:var(--wpbb-m142-primary);
+  --sector-v97-accent:var(--wpbb-m142-primary);
+  --sector-v97-soft:var(--wpbb-m142-soft-strong);
+  --wpbb-primary:var(--wpbb-m142-primary);
+  --wpbb-button-bg:var(--wpbb-m142-primary);
+}
+
+/* Medicine-only shells that are not part of the generic Events selector. */
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main :is(.medicine-booking-section,.medicine-doctor-directory,.medicine-pharmacy-single):not(.wp-theme-section-shell):not(.wpbb-v67-section-shell){
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:none!important;
+  margin-inline:0!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main .medicine-booking-section{
+  padding:var(--wpbb-v140-section-y) var(--wpbb-v140-right) var(--wpbb-v140-section-y) var(--wpbb-v140-left)!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main :is(.medicine-booking-section,.medicine-doctor-directory,.medicine-pharmacy-single) > .container{
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main :is(.medicine-doctor-directory,.medicine-booking-section) > .container > :is(.row,.wpbb-row){
+  width:100%!important;
+  max-width:none!important;
+  margin-inline:0!important;
+}
+
+/* Heading rows: one-child headings use the full rail; two-column CTA headings retain their split. */
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wp-theme-section-heading{
+  --bs-gutter-x:0!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:0 0 var(--wpbb-v140-heading-gap)!important;
+  padding:0!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wp-theme-section-heading > :is(.wpbb-column,.wp-block-wpbb-column,[class^="col-"],[class*=" col-"]){
+  min-width:0!important;
+  padding-left:0!important;
+  padding-right:0!important;
+}
+@supports selector(:has(*)){
+  html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wp-theme-section-heading:has(> :only-child) > :only-child{
+    flex:0 0 100%!important;
+    width:100%!important;
+    max-width:900px!important;
+  }
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-pharmacy-section .wp-theme-section-heading{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  gap:24px!important;
+  align-items:end!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-pharmacy-section .wp-theme-section-heading > *{
+  float:none!important;
+  flex:none!important;
+  width:auto!important;
+  max-width:none!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-pharmacy-section .wp-theme-section-heading > :first-child{max-width:900px!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-pharmacy-section .wp-theme-section-heading > :last-child{justify-self:end!important;text-align:right!important}
+
+/* Typography and restrained Medicine colour system. */
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main :is(h1,h2,h3,h4,h5,h6){color:var(--wpbb-m142-ink)!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main :is(p,li,.text-secondary,.wp-theme-sector-lead){color:var(--wpbb-m142-copy)}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main :is(.wp-theme-sector-eyebrow,.medicine-doctor-card__speciality,.medicine-doctor-card__badge,.wp-theme-card-number){color:var(--wpbb-m142-primary)!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wp-theme-section-heading::after{background:var(--wpbb-m142-primary)!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main :is(a,.link-primary){--bs-link-color:var(--wpbb-m142-primary);--bs-link-hover-color:var(--wpbb-m142-primary-dark)}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main :is(.btn-primary,.wpbb-v97-hero-finder__submit){
+  border-color:var(--wpbb-m142-primary)!important;
+  background:var(--wpbb-m142-primary)!important;
+  color:#fff!important;
+  box-shadow:none!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main :is(.btn-primary,.wpbb-v97-hero-finder__submit):hover,
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main :is(.btn-primary,.wpbb-v97-hero-finder__submit):focus{
+  border-color:var(--wpbb-m142-primary-dark)!important;
+  background:var(--wpbb-m142-primary-dark)!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .btn-outline-primary{
+  border-color:var(--wpbb-m142-primary)!important;
+  background:#fff!important;
+  color:var(--wpbb-m142-primary)!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .btn-outline-primary:hover{
+  border-color:var(--wpbb-m142-primary)!important;
+  background:var(--wpbb-m142-primary)!important;
+  color:#fff!important;
+}
+
+/* Hero: preserve the wide source composition; never force a 600px crop at laptop widths. */
+html body.wpbb-sector-premium.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main :is(.wp-theme-sector-hero,.wp-theme-hero,.wpbb-v62-hero){
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+  overflow:hidden!important;
+  background:#f3f7f8!important;
+}
+html body.wpbb-sector-premium.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main :is(.wp-theme-sector-hero,.wp-theme-hero,.wpbb-v62-hero) > .container{
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+}
+html body.wpbb-sector-premium.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main .wpbb-swiper--hero{
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:#f3f7f8!important;
+  box-shadow:none!important;
+  overflow:hidden!important;
+}
+html body.wpbb-sector-premium.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main .wpbb-swiper--hero .wpbb-swiper-slide--hero{
+  position:relative!important;
+  min-height:clamp(430px,45vw,560px)!important;
+  overflow:hidden!important;
+  background:#f3f7f8!important;
+}
+html body.wpbb-sector-premium.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main .wpbb-swiper--hero .wpbb-swiper-slide__media{
+  display:block!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  width:100%!important;
+  height:100%!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  overflow:hidden!important;
+  opacity:1!important;
+  visibility:visible!important;
+}
+html body.wpbb-sector-premium.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main .wpbb-swiper--hero .wpbb-swiper-slide__media img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  min-height:0!important;
+  max-width:none!important;
+  object-fit:cover!important;
+  object-position:center center!important;
+  filter:none!important;
+  transform:none!important;
+  opacity:1!important;
+  visibility:visible!important;
+}
+html body.wpbb-sector-premium.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main .wpbb-swiper--hero .wpbb-swiper-slide--hero::before{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:1!important;
+  display:block!important;
+  pointer-events:none!important;
+  background:linear-gradient(90deg,rgba(255,255,255,.99) 0%,rgba(255,255,255,.98) 23%,rgba(255,255,255,.91) 39%,rgba(255,255,255,.60) 56%,rgba(255,255,255,.18) 73%,rgba(255,255,255,0) 88%)!important;
+}
+html body.wpbb-sector-premium.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main .wpbb-swiper--hero .wpbb-swiper-slide--hero::after{display:none!important;content:none!important}
+html body.wpbb-sector-premium.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main .wpbb-swiper--hero .wpbb-swiper-slide__content{
+  box-sizing:border-box!important;
+  position:relative!important;
+  z-index:2!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  align-items:flex-start!important;
+  width:100%!important;
+  max-width:none!important;
+  min-height:clamp(430px,45vw,560px)!important;
+  margin:0!important;
+  padding:clamp(58px,6vw,82px) var(--wpbb-v140-right) clamp(70px,7vw,96px) var(--wpbb-v140-left)!important;
+  text-align:left!important;
+}
+html body.wpbb-sector-premium.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main .wpbb-swiper--hero :is(.wpbb-swiper-slide__eyebrow,.wpbb-swiper-slide__title,.wpbb-swiper-slide__text,.wpbb-swiper-slide__actions,.wpbb-v97-hero-finder){margin-left:0!important;margin-right:0!important}
+html body.wpbb-sector-premium.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main .wpbb-swiper--hero .wpbb-swiper-slide__title{
+  max-width:560px!important;
+  color:var(--wpbb-m142-ink)!important;
+  text-wrap:balance;
+}
+html body.wpbb-sector-premium.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main .wpbb-swiper--hero .wpbb-swiper-slide__text{max-width:560px!important;color:#4c6374!important}
+html body.wpbb-sector-premium.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main .wpbb-v97-hero-finder{
+  width:min(720px,calc(100vw - var(--wpbb-v140-left) - var(--wpbb-v140-right)))!important;
+  max-width:720px!important;
+  margin-top:26px!important;
+}
+html body.wpbb-sector-premium.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main .wpbb-v97-hero-finder__form{
+  border:1px solid rgba(16,40,58,.11)!important;
+  border-radius:14px!important;
+  background:rgba(255,255,255,.97)!important;
+  box-shadow:0 16px 40px rgba(16,40,58,.12)!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine.home.wpbb-v142-has-hero-finder #wp-theme-main .medicine-search-panel{display:none!important}
+
+/* Calm surface rhythm: soft sections are neutral blue-grey, not saturated mint. */
+html body.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main :is(.wp-theme-services-section,.wp-theme-sector-services-section,.medicine-booking-section,.medicine-pharmacy-section,.wp-theme-gallery-section,.wp-theme-process-section){background:var(--wpbb-m142-soft)!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main :is(.medicine-specialities,.wp-theme-about-section,.wp-theme-industries-section,.medicine-trust-band,.wp-theme-case-studies-section,.wp-theme-faq-section,.wp-theme-insights-section,.wp-theme-blog-preview-section){background:#fff!important}
+
+/* One grid owner for medicine-specific card rows. */
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wpbb-v142-grid{
+  --bs-gutter-x:0!important;
+  --bs-gutter-y:0!important;
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:var(--wpbb-m142-gap)!important;
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  align-items:stretch!important;
+  list-style:none!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wpbb-v142-grid > .wpbb-v142-grid-cell{
+  box-sizing:border-box!important;
+  display:flex!important;
+  float:none!important;
+  clear:none!important;
+  flex:none!important;
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+  align-items:stretch!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wpbb-v142-grid > .wpbb-v142-grid-cell > *{width:100%!important;max-width:none!important;min-width:0!important;margin:0!important}
+
+/* Cards: same geometry throughout the page. */
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main :is(.medicine-speciality-card,.medicine-trust-card,.medicine-doctor-card,.medicine-pharmacy-section .wpbb-catalogue-card,.wp-theme-sector-card,.wpbb-icon-card,.wp-theme-process-card,.wp-theme-case-card,.wp-theme-blog-card){
+  box-sizing:border-box!important;
+  height:100%!important;
+  border:1px solid var(--wpbb-m142-line)!important;
+  border-radius:var(--wpbb-m142-radius)!important;
+  background:var(--wpbb-m142-card)!important;
+  box-shadow:0 10px 28px rgba(16,40,58,.055)!important;
+  overflow:hidden!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main :is(.medicine-speciality-card,.medicine-trust-card){padding:24px!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main :is(.medicine-speciality-card,.medicine-trust-card,.wp-theme-sector-card,.wpbb-icon-card) :is(h3,h4){margin-top:0!important}
+
+/* About: one explicit two-column owner instead of inherited Bootstrap widths. */
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wp-theme-about-section > .container > :is(.row,.wpbb-row):not(.wp-theme-section-heading){
+  --bs-gutter-x:0!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr)!important;
+  gap:clamp(32px,4vw,56px)!important;
+  align-items:center!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wp-theme-about-section > .container > :is(.row,.wpbb-row):not(.wp-theme-section-heading) > :is(.wpbb-column,.wp-block-wpbb-column,[class^="col-"],[class*=" col-"]){
+  float:none!important;
+  flex:none!important;
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  margin:0!important;
+  padding:0!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wp-theme-about-section :is(.wp-theme-sector-page-image,.wp-theme-sector-media-text__media){
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  border-radius:18px!important;
+  overflow:hidden!important;
+  background:var(--wpbb-m142-soft-strong)!important;
+  box-shadow:0 14px 34px rgba(16,40,58,.08)!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wp-theme-about-section :is(.wp-theme-sector-page-image,.wp-theme-sector-media-text__media) img{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  aspect-ratio:4/3!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  filter:none!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wp-theme-about-section > .container > :is(.row,.wpbb-row):not(.wp-theme-section-heading) > :last-child{max-width:600px!important}
+
+/* Doctor directory: full rail, clean toolbar and unique AVIF card media. */
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-doctor-directory{padding:0!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-doctor-directory .container{width:100%!important;max-width:none!important;margin:0!important;padding:0!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-doctor-toolbar{
+  width:100%!important;
+  margin:0 0 24px!important;
+  padding:16px!important;
+  border:1px solid var(--wpbb-m142-line)!important;
+  border-radius:14px!important;
+  background:#fff!important;
+  box-shadow:0 8px 24px rgba(16,40,58,.04)!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wpbb-v142-filter-row{
+  --bs-gutter-x:12px!important;
+  --bs-gutter-y:12px!important;
+  display:grid!important;
+  grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) minmax(0,1fr) 56px!important;
+  gap:12px!important;
+  width:100%!important;
+  margin:0!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wpbb-v142-filter-row > *{float:none!important;width:100%!important;max-width:none!important;margin:0!important;padding:0!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-doctor-card{display:flex!important;flex-direction:column!important;min-width:0!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-doctor-card__media{
+  position:relative!important;
+  display:block!important;
+  width:100%!important;
+  aspect-ratio:4/3!important;
+  overflow:hidden!important;
+  background:var(--wpbb-m142-soft-strong)!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-doctor-card__media > :not(img):not(.medicine-doctor-card__badge){display:none!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-doctor-card__media > img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  aspect-ratio:4/3!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  margin:0!important;
+  padding:0!important;
+  filter:none!important;
+  transform:none!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-doctor-card__badge{
+  position:absolute!important;
+  top:12px!important;
+  left:12px!important;
+  z-index:3!important;
+  max-width:calc(100% - 24px)!important;
+  padding:5px 9px!important;
+  border:1px solid rgba(17,123,139,.2)!important;
+  border-radius:999px!important;
+  background:rgba(255,255,255,.94)!important;
+  font-size:11px!important;
+  line-height:1.2!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-doctor-card__body{
+  display:flex!important;
+  flex:1 1 auto!important;
+  flex-direction:column!important;
+  min-width:0!important;
+  padding:18px!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-doctor-card__body h3{font-size:18px!important;line-height:1.25!important;margin:5px 0 10px!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-doctor-card__meta{display:grid!important;gap:4px!important;color:var(--wpbb-m142-copy)!important;font-size:13px!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-doctor-card__actions{display:flex!important;gap:8px!important;margin-top:auto!important;padding-top:16px!important}
+
+/* Booking: use the same measured rail and a single full-width calendar shell. */
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-booking-section > .container > :is(.row,.wpbb-row),
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-booking-section > .container > :is(.row,.wpbb-row) > :is(.wpbb-column,.wp-block-wpbb-column,[class^="col-"],[class*=" col-"]){
+  width:100%!important;
+  max-width:none!important;
+  flex:0 0 100%!important;
+  margin:0!important;
+  padding:0!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-booking-section :is(.wpbb-booking-calendar,.wpbb-booking,.booking-calendar,form){width:100%!important;max-width:none!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-booking-section :is(.wpbb-booking-calendar,.wpbb-booking,.booking-calendar){
+  border:1px solid var(--wpbb-m142-line)!important;
+  border-radius:18px!important;
+  background:#fff!important;
+  box-shadow:0 12px 32px rgba(16,40,58,.055)!important;
+}
+
+/* Trust: full heading rail + four equal cards. */
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-trust-band .medicine-trust-grid{width:100%!important;max-width:none!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-trust-card h3{font-size:17px!important;line-height:1.3!important;margin-bottom:8px!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-trust-card p{margin-bottom:0!important}
+
+/* Pharmacy: full-bleed high-quality AVIF artwork, never padded thumbnails. */
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-pharmacy-section .wpbb-catalogue-card{display:flex!important;flex-direction:column!important;min-width:0!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-pharmacy-section .wpbb-catalogue-card :is(.wpbb-catalogue-card__media,.card-img-top,.wp-post-image,img:first-of-type){background:var(--wpbb-m142-soft-strong)}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-pharmacy-section .wpbb-catalogue-card img{
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  height:auto!important;
+  aspect-ratio:4/3!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+  filter:none!important;
+  transform:none!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-pharmacy-section .wpbb-catalogue-card .card-body{
+  display:flex!important;
+  flex:1 1 auto!important;
+  flex-direction:column!important;
+  min-width:0!important;
+  padding:20px!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-pharmacy-section .wpbb-catalogue-card .btn{margin-top:auto!important;align-self:flex-start!important}
+
+/* Case studies, gallery and editorial photography. */
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main :is(.wp-theme-gallery-section,.wp-theme-blog-preview-section,.wp-theme-insights-section) img{
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  height:auto!important;
+  aspect-ratio:4/3!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  filter:none!important;
+  transform:none!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wp-theme-gallery-section :is(figure,.wp-theme-gallery-card,.card){overflow:hidden!important;border-radius:16px!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main :is(.wp-theme-blog-card,.wp-theme-blog-preview-section article){height:100%!important}
+
+/* Stats stay on the same rail and share equal card widths. */
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main :is(.wp-theme-home-stats,.wp-theme-sector-proof){background:#fff!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main :is(.wp-theme-sector-proof__item,.wpbb-fun-fact){
+  border:1px solid var(--wpbb-m142-line)!important;
+  border-radius:14px!important;
+  background:var(--wpbb-m142-soft-strong)!important;
+  box-shadow:none!important;
+}
+
+/* Footer: dark navy base with Medicine teal action, replacing legacy bright-green bands. */
+html body.wpbb-v140.wpbb-v142-theme-medicine .wp-theme-site-footer{background:var(--wpbb-m142-dark)!important;color:#c8d5df!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine .wp-theme-footer-newsletter-band{
+  background:var(--wpbb-m142-dark)!important;
+  border-top:1px solid rgba(255,255,255,.08)!important;
+  border-bottom:1px solid rgba(255,255,255,.10)!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine .wp-theme-footer-newsletter :is(h1,h2,h3,h4,p,label,span,small),
+html body.wpbb-v140.wpbb-v142-theme-medicine .wp-theme-footer-newsletter__copy :is(h1,h2,h3,h4,p){color:#fff!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine .wp-theme-footer-newsletter p,
+html body.wpbb-v140.wpbb-v142-theme-medicine .wp-theme-footer-newsletter small{color:#c8d5df!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine .wp-theme-footer-newsletter input[type=email],
+html body.wpbb-v140.wpbb-v142-theme-medicine .wp-theme-footer-newsletter input[type=text]{
+  border-color:rgba(255,255,255,.22)!important;
+  background:#fff!important;
+  color:var(--wpbb-m142-ink)!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine .wp-theme-footer-newsletter :is(button,input[type=submit]){
+  border-color:var(--wpbb-m142-primary)!important;
+  background:var(--wpbb-m142-primary)!important;
+  color:#fff!important;
+}
+html body.wpbb-v140.wpbb-v142-theme-medicine .wp-theme-footer-main,
+html body.wpbb-v140.wpbb-v142-theme-medicine .wp-theme-footer-bottom{background:#fff!important;color:#607283!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine .wp-theme-footer-main :is(h1,h2,h3,h4,strong,.wp-theme-footer-heading){color:var(--wpbb-m142-ink)!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine .wp-theme-footer-main a{color:#506779!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine .wp-theme-footer-main a:hover{color:var(--wpbb-m142-primary)!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine .wp-theme-footer-bottom{border-top:1px solid var(--wpbb-m142-line)!important}
+
+@media(min-width:680px){
+  html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wpbb-v142-grid.wpbb-v142-cols-2,
+  html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wpbb-v142-grid.wpbb-v142-cols-3,
+  html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wpbb-v142-grid.wpbb-v142-cols-4{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(min-width:1040px){
+  html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wpbb-v142-grid.wpbb-v142-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wpbb-v142-grid.wpbb-v142-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wpbb-v142-grid.wpbb-v142-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+}
+@media(max-width:1039.98px){
+  html body.wpbb-v140.wpbb-v142-theme-medicine{--wpbb-m142-gap:20px}
+  html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wpbb-v142-filter-row{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wpbb-v142-filter-row > :last-child{grid-column:auto!important}
+  html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wp-theme-about-section > .container > :is(.row,.wpbb-row):not(.wp-theme-section-heading){grid-template-columns:1fr!important;gap:30px!important}
+  html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wp-theme-about-section > .container > :is(.row,.wpbb-row):not(.wp-theme-section-heading) > :last-child{max-width:760px!important}
+}
+@media(max-width:767.98px){
+  html body.wpbb-v140.wpbb-v142-theme-medicine{--wpbb-m142-gap:18px}
+  html body.wpbb-sector-premium.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main .wpbb-swiper--hero .wpbb-swiper-slide--hero,
+  html body.wpbb-sector-premium.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main .wpbb-swiper--hero .wpbb-swiper-slide__content{min-height:500px!important}
+  html body.wpbb-sector-premium.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main .wpbb-swiper--hero .wpbb-swiper-slide__media{opacity:.50!important}
+  html body.wpbb-sector-premium.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main .wpbb-swiper--hero .wpbb-swiper-slide__media img{object-position:68% center!important}
+  html body.wpbb-sector-premium.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main .wpbb-swiper--hero .wpbb-swiper-slide--hero::before{background:linear-gradient(90deg,rgba(255,255,255,.99) 0%,rgba(255,255,255,.96) 58%,rgba(255,255,255,.76) 100%)!important}
+  html body.wpbb-sector-premium.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main .wpbb-swiper--hero .wpbb-swiper-slide__content{padding-top:48px!important;padding-bottom:74px!important}
+  html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-pharmacy-section .wp-theme-section-heading{grid-template-columns:1fr!important;gap:16px!important}
+  html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-pharmacy-section .wp-theme-section-heading > :last-child{justify-self:start!important;text-align:left!important}
+  html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .wpbb-v142-filter-row{grid-template-columns:1fr!important}
+  html body.wpbb-v140.wpbb-v142-theme-medicine #wp-theme-main .medicine-booking-section{padding-top:38px!important;padding-bottom:38px!important}
+}
+
+/* The v140 pager is the single hero pager; legacy Swiper pagination must not reserve a white strip. */
+html body.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main .wpbb-swiper--hero > :is(.swiper-pagination,.swiper-pagination-bullets):not(.wpbb-v140-hero-pagination),
+html body.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main .wpbb-swiper--hero .swiper > :is(.swiper-pagination,.swiper-pagination-bullets):not(.wpbb-v140-hero-pagination){display:none!important;height:0!important;margin:0!important;padding:0!important}
+html body.wpbb-v140.wpbb-v142-theme-medicine.home #wp-theme-main .wpbb-swiper--hero :is(.swiper,.swiper-wrapper){margin:0!important;padding-bottom:0!important}

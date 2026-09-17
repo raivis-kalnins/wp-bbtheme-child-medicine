@@ -14,7 +14,7 @@ function wpbb_medicine_assets() {
     if ( ! is_array( $data ) ) return;
     if ( ! empty( $data['src/scss/public.scss']['file'] ) ) {
         wp_enqueue_style( 'wpbb-medicine-app', get_stylesheet_directory_uri() . '/dist/' . ltrim( $data['src/scss/public.scss']['file'], '/' ), array(), $theme->get( 'Version' ) );
-        if ( function_exists( 'wp_theme_sector_customizer_css' ) ) wp_add_inline_style( 'wpbb-medicine-app', wp_theme_sector_customizer_css( '#176b87', '16px', '--sector-primary', '--sector-radius' ) );
+        if ( function_exists( 'wp_theme_sector_customizer_css' ) ) wp_add_inline_style( 'wpbb-medicine-app', wp_theme_sector_customizer_css( '#117b8b', '16px', '--sector-primary', '--sector-radius' ) );
     }
     if ( ! empty( $data['src/js/main.js']['file'] ) ) wp_enqueue_script( 'wpbb-medicine-app', get_stylesheet_directory_uri() . '/dist/' . ltrim( $data['src/js/main.js']['file'], '/' ), array(), $theme->get( 'Version' ), true );
     if ( wpbb_medicine_needs_directory_assets() ) {
@@ -63,8 +63,7 @@ function wpbb_medicine_save_doctor($post_id){
 add_action('save_post_doctor','wpbb_medicine_save_doctor');
 
 function wpbb_medicine_demo_profile( $profile ) {
-    $assets = trailingslashit( get_stylesheet_directory_uri() ) . 'assets/img/doctors/';
-    $site_previews = trailingslashit( get_stylesheet_directory_uri() ) . 'assets/img/site-previews/';
+    $medical_photos = trailingslashit( get_stylesheet_directory_uri() ) . 'assets/img/medical-photos/';
     $profile['id']='medicine'; $profile['name']=__('Medical Practice','wp-bbtheme-child-medicine'); $profile['commerce']=false;
     $profile['services_eyebrow']=__('Clinical services','wp-bbtheme-child-medicine'); $profile['services_heading']=__('Specialist care explained clearly, from first appointment onward.','wp-bbtheme-child-medicine');
     $profile['about_eyebrow']=__('Patient-first care','wp-bbtheme-child-medicine'); $profile['industries_eyebrow']=__('Ways we can help','wp-bbtheme-child-medicine'); $profile['industries_heading']=__('Care pathways for everyday concerns, specialist review and ongoing health.','wp-bbtheme-child-medicine');
@@ -72,12 +71,12 @@ function wpbb_medicine_demo_profile( $profile ) {
     $profile['eyebrow']=__('Care that starts with finding the right clinician','wp-bbtheme-child-medicine');
     $profile['hero_title']=__('Specialist care, easier to find and book.','wp-bbtheme-child-medicine');
     $profile['hero_text']=__('Search trusted clinicians by speciality and location, compare their experience, then request a convenient appointment without leaving the site.','wp-bbtheme-child-medicine');
-    $profile['hero_image']=$site_previews.'project-1.jpg'; $profile['about_image']=$site_previews.'project-2.jpg';
+    $profile['hero_image']=$medical_photos.'hero-health.jpg'; $profile['about_image']=$medical_photos.'about-health.jpg';
     $profile['primary_label']=__('Find a doctor','wp-bbtheme-child-medicine'); $profile['primary_url']=get_post_type_archive_link('doctor')?:home_url('/doctors/');
     $profile['secondary_label']=__('Book an appointment','wp-bbtheme-child-medicine'); $profile['secondary_url']=home_url('/appointments/');
     $profile['hero_slides']=array(
-      array('type'=>'hero','eyebrow'=>__('Trusted clinical team','wp-bbtheme-child-medicine'),'title'=>__('Specialist care, easier to find and book.','wp-bbtheme-child-medicine'),'text'=>$profile['hero_text'],'image'=>$assets.'amelia-hart.svg','buttonText'=>__('Find a doctor','wp-bbtheme-child-medicine'),'buttonUrl'=>$profile['primary_url'],'secondaryText'=>__('Book appointment','wp-bbtheme-child-medicine'),'secondaryUrl'=>$profile['secondary_url']),
-      array('type'=>'hero','eyebrow'=>__('Same-week appointments','wp-bbtheme-child-medicine'),'title'=>__('Speak to the right specialist sooner.','wp-bbtheme-child-medicine'),'text'=>__('Browse clinical profiles, languages, locations and availability before choosing an appointment.','wp-bbtheme-child-medicine'),'image'=>$assets.'maija-ozola.svg','buttonText'=>__('Meet the team','wp-bbtheme-child-medicine'),'buttonUrl'=>$profile['primary_url'],'secondaryText'=>__('How it works','wp-bbtheme-child-medicine'),'secondaryUrl'=>'#services')
+      array('type'=>'hero','eyebrow'=>__('Trusted clinical team','wp-bbtheme-child-medicine'),'title'=>__('Specialist care, easier to find and book.','wp-bbtheme-child-medicine'),'text'=>$profile['hero_text'],'image'=>$medical_photos.'care-1.jpg','buttonText'=>__('Find a doctor','wp-bbtheme-child-medicine'),'buttonUrl'=>$profile['primary_url'],'secondaryText'=>__('Book appointment','wp-bbtheme-child-medicine'),'secondaryUrl'=>$profile['secondary_url']),
+      array('type'=>'hero','eyebrow'=>__('Same-week appointments','wp-bbtheme-child-medicine'),'title'=>__('Speak to the right specialist sooner.','wp-bbtheme-child-medicine'),'text'=>__('Browse clinical profiles, languages, locations and availability before choosing an appointment.','wp-bbtheme-child-medicine'),'image'=>$medical_photos.'care-2.jpg','buttonText'=>__('Meet the team','wp-bbtheme-child-medicine'),'buttonUrl'=>$profile['primary_url'],'secondaryText'=>__('How it works','wp-bbtheme-child-medicine'),'secondaryUrl'=>'#services')
     );
     $profile['services']=array(
       array(__('General medicine','wp-bbtheme-child-medicine'),__('Everyday health concerns, prevention and onward specialist referrals.','wp-bbtheme-child-medicine')),
@@ -98,7 +97,7 @@ function wpbb_medicine_demo_profile( $profile ) {
     $profile['cta_title']=__('Need help choosing the right specialist?','wp-bbtheme-child-medicine'); $profile['cta_text']=__('Contact the care team or start with the doctor directory and book a suitable appointment.','wp-bbtheme-child-medicine');
     $profile['footer_text']=__('A modern medical directory for specialist discovery, patient information and appointment requests.','wp-bbtheme-child-medicine');
     $profile['page_labels']=array('about'=>__('About the clinic','wp-bbtheme-child-medicine'),'services'=>__('Specialities','wp-bbtheme-child-medicine'),'industries'=>__('Patient services','wp-bbtheme-child-medicine'),'contact'=>__('Contact','wp-bbtheme-child-medicine'),'blog'=>__('Health insights','wp-bbtheme-child-medicine'));
-    $profile['palette']=array('theme_brand_color'=>'#176b87','theme_accent_color'=>'#57b8a6','theme_text_color'=>'#15263a','theme_heading_color'=>'#102238','theme_background_color'=>'#ffffff','theme_surface_color'=>'#ffffff','theme_surface_alt_color'=>'#f2f8f8','theme_border_color'=>'#dbe8ea','theme_link_color'=>'#176b87','theme_link_hover_color'=>'#0d4f68','theme_radius'=>'16px','theme_font_provider'=>'system');
+    $profile['palette']=array('theme_brand_color'=>'#117b8b','theme_accent_color'=>'#57b8a6','theme_text_color'=>'#607283','theme_heading_color'=>'#10283a','theme_background_color'=>'#ffffff','theme_surface_color'=>'#ffffff','theme_surface_alt_color'=>'#f5f9fa','theme_border_color'=>'#d7e7e9','theme_link_color'=>'#117b8b','theme_link_hover_color'=>'#0b5865','theme_radius'=>'16px','theme_font_provider'=>'system');
     return $profile;
 }
 add_filter('wp_theme_demo_profile','wpbb_medicine_demo_profile');
@@ -137,7 +136,18 @@ function wpbb_medicine_doctor_query_args($request=array()){
     return $args;
 }
 function wpbb_medicine_doctor_card($id){
-    $spec=wp_get_post_terms($id,'doctor_speciality',array('fields'=>'names'));$loc=wp_get_post_terms($id,'doctor_location',array('fields'=>'names'));$cred=get_post_meta($id,'_doctor_credentials',true);$exp=get_post_meta($id,'_doctor_experience',true);$price=get_post_meta($id,'_doctor_consultation_price',true);$image=get_the_post_thumbnail_url($id,'large');$media=function_exists('wp_theme_item_gallery_card_inner')?wp_theme_item_gallery_card_inner($id,'large',4):($image?'<img src="'.esc_url($image).'" alt="'.esc_attr(get_the_title($id)).'" loading="lazy">':'');
+    $spec=wp_get_post_terms($id,'doctor_speciality',array('fields'=>'names'));
+    $loc=wp_get_post_terms($id,'doctor_location',array('fields'=>'names'));
+    $cred=get_post_meta($id,'_doctor_credentials',true);
+    $exp=get_post_meta($id,'_doctor_experience',true);
+    $price=get_post_meta($id,'_doctor_consultation_price',true);
+    $image=get_the_post_thumbnail_url($id,'large');
+    if(!$image){
+        $slug=sanitize_file_name((string)get_post_field('post_name',$id));
+        $source=get_stylesheet_directory().'/assets/img/doctors/'.$slug.'.svg';
+        if(is_file($source))$image=get_stylesheet_directory_uri().'/assets/img/doctors/'.$slug.'.svg?v='.filemtime($source);
+    }
+    $media=$image?'<img src="'.esc_url($image).'" alt="'.esc_attr(get_the_title($id)).'" loading="lazy" decoding="async">':'';
     return '<article class="medicine-doctor-card motion-fade-up"><a class="medicine-doctor-card__media" href="'.esc_url(get_permalink($id)).'">'.$media.'<span class="medicine-doctor-card__badge">'.esc_html($cred?:__('Clinician','wp-bbtheme-child-medicine')).'</span></a><div class="medicine-doctor-card__body"><div class="medicine-doctor-card__speciality">'.esc_html($spec[0]??'').'</div><h3><a href="'.esc_url(get_permalink($id)).'">'.esc_html(get_the_title($id)).'</a></h3><div class="medicine-doctor-card__meta"><span>'.esc_html($loc[0]??'').'</span>'.($exp?'<span>'.absint($exp).' '.esc_html__('years experience','wp-bbtheme-child-medicine').'</span>':'').($price?'<span>'.esc_html__('From','wp-bbtheme-child-medicine').' '.esc_html($price).'</span>':'').'</div><div class="medicine-doctor-card__actions"><a class="btn btn-outline-primary" href="'.esc_url(get_permalink($id)).'">'.esc_html__('Profile','wp-bbtheme-child-medicine').'</a><a class="btn btn-primary" href="'.esc_url(add_query_arg('doctor',$id,wp_theme_demo_page_url('appointments'))).'">'.esc_html__('Book','wp-bbtheme-child-medicine').'</a></div></div></article>';
 }
 function wpbb_medicine_directory_results($request=array()){$q=new WP_Query(wpbb_medicine_doctor_query_args($request));$html='<div class="row medicine-doctor-grid">';if($q->have_posts()){while($q->have_posts()){$q->the_post();$html.='<div class="col-12 col-md-6 col-xl-3">'.wpbb_medicine_doctor_card(get_the_ID()).'</div>';}}else{$html.='<div class="col-12"><div class="alert alert-light">'.esc_html__('No doctors match those filters. Try another speciality or location.','wp-bbtheme-child-medicine').'</div></div>';}wp_reset_postdata();return $html.'</div>';}
@@ -1198,3 +1208,92 @@ require_once get_stylesheet_directory() . '/inc/v105-finish.php';
 
 // v3.8.11.07 final search, WooCommerce, Jobs captcha/grid and responsive repair.
 require_once get_stylesheet_directory() . '/inc/v107-finish.php';
+
+// v3.8.11.08 WooCommerce layout/polish and packaging finish.
+require_once get_stylesheet_directory() . '/inc/v108-finish.php';
+
+// v3.8.11.09 WooCommerce, media and account finalisation.
+require_once get_stylesheet_directory() . '/inc/v109-finish.php';
+
+// v3.8.11.10 media, WooCommerce, managed-page and route-facing finish.
+require_once get_stylesheet_directory() . '/inc/v110-finish.php';
+
+// v3.8.11.11 hero finder, editorial grid, mega-menu and image-quality finish.
+require_once get_stylesheet_directory() . '/inc/v111-finish.php';
+
+// v3.8.11.12 editorial grid, hero clarity and media recovery.
+require_once get_stylesheet_directory() . '/inc/v112-finish.php';
+
+// v3.8.11.13 final hero edge/clarity and editorial-grid alignment.
+require_once get_stylesheet_directory() . '/inc/v113-finish.php';
+
+// v3.8.11.14 child-only settings, editor, legal, editorial and hero finish.
+require_once get_stylesheet_directory() . '/inc/v114-finish.php';
+
+// v3.8.11.15 final mega-menu, hero/media, quote and BBuilder repair.
+require_once get_stylesheet_directory() . '/inc/v115-finish.php';
+
+// v3.8.11.16 reset-safe layout/media, mega-menu, consent and BBuilder finish.
+require_once get_stylesheet_directory() . '/inc/v116-finish.php';
+
+// v3.8.11.17 exact mega-menu placement, reset-safe BBuilder grid and immediate media recovery.
+require_once get_stylesheet_directory() . '/inc/v117-finish.php';
+
+
+// v3.8.11.18 reset-safe gutters, direct hero assets, nav-trigger mega positioning and cache finish.
+require_once get_stylesheet_directory() . '/inc/v118-finish.php';
+
+// v3.8.11.19 live regression repair: closer mega menus, canonical gutters/grids and no-flash consent.
+require_once get_stylesheet_directory() . '/inc/v119-finish.php';
+
+// v3.8.11.20 stable v119 rollback, restored gutters/grids and deterministic hero pagination/quality repair.
+require_once get_stylesheet_directory() . '/inc/v120-finish.php';
+
+// v3.8.11.21 scoped BBuilder grid recovery; retire v119/v120 global geometry while preserving hero quality/pagination.
+require_once get_stylesheet_directory() . '/inc/v121-finish.php';
+
+// v3.8.11.22 component-only grid-gap finish; keep v121 alignment and restore stable card/media/stat spacing.
+require_once get_stylesheet_directory() . '/inc/v122-finish.php';
+
+// v3.8.11.23 remaining basic grids/gaps + authoritative hero source/pagination finish.
+require_once get_stylesheet_directory() . '/inc/v123-finish.php';
+
+// v3.8.11.24 final basic visual hardening: deterministic card gaps, full-width fun-facts and one compact hero pager.
+require_once get_stylesheet_directory() . '/inc/v124-finish.php';
+
+// v3.8.11.25 final scoped grid, hero clarity and WooCommerce shop/cart/account finish.
+require_once get_stylesheet_directory() . '/inc/v125-final.php';
+
+// v3.8.11.26 final cross-theme component grids, hero image/pagination and process-card recovery.
+require_once get_stylesheet_directory() . '/inc/v126-final.php';
+
+// v3.8.11.27 final live-regression hardening: robust card grids, process-card shape, hero pagination and Business/Building hero fade.
+require_once get_stylesheet_directory() . '/inc/v127-final.php';
+
+// v3.8.11.28 final live component recovery: commerce grids, cart/checkout, process cards and stable hero media/pagination.
+require_once get_stylesheet_directory() . '/inc/v128-final.php';
+
+// v3.8.11.34 final cross-theme hero, grid, process and WooCommerce ownership layer.
+require_once get_stylesheet_directory() . '/inc/v134-final.php';
+
+
+// v3.8.11.35 final duplicate/process/hero cleanup.
+require_once get_stylesheet_directory() . '/inc/v135-final.php';
+
+// v3.8.11.36 full-width hero, stable process and cross-theme grid ownership.
+require_once get_stylesheet_directory() . '/inc/v136-final.php';
+
+// v3.8.11.37 Medicine-only alignment, image quality and grid consistency.
+require_once get_stylesheet_directory() . '/inc/v137-uniformity.php';
+
+// v3.8.11.38 deterministic Medicine homepage layout and media repair.
+require_once get_stylesheet_directory() . '/inc/v138-layout-media.php';
+
+// v3.8.11.40 Events-parity layout recovery: retire conflicting geometry and restore one measured owner.
+require_once get_stylesheet_directory() . '/inc/v140-medicine-parity.php';
+
+// v3.8.11.42 Medicine visual finish on the canonical Events v140 layout owner.
+require_once get_stylesheet_directory() . '/inc/v142-medicine-finish.php';
+
+// v3.8.11.43 deterministic media ownership, hero crop and final rail/colour repair.
+require_once get_stylesheet_directory() . '/inc/v143-medicine-finish.php';

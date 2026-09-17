@@ -1,0 +1,207 @@
+/* 3.8.11.37 Medicine-only section alignment, image and grid consistency. */
+body.wpbb-medicine-v137{
+  --wpbb-m137-shell:1180px;
+  --wpbb-m137-page-pad:24px;
+  --wpbb-m137-grid-gap:24px;
+  --wpbb-m137-card-radius:16px;
+  --wpbb-m137-media-radius:14px;
+  --wpbb-m137-line:#dde5ee;
+}
+
+/* One horizontal content line for every non-hero medicine section. */
+html body.wpbb-medicine-v137 #wp-theme-main :is(
+  .wpbb-v67-section-inner.container,
+  .wp-theme-section-shell > .container,
+  .medicine-booking-section > .container,
+  .medicine-doctor-directory > .container,
+  .medicine-search-panel.container,
+  .medicine-pharmacy-section > .container,
+  .medicine-doctor-single > .container,
+  .medicine-pharmacy-single > .container
+){
+  box-sizing:border-box!important;
+  width:min(calc(100% - (var(--wpbb-m137-page-pad) * 2)),var(--wpbb-m137-shell))!important;
+  max-width:var(--wpbb-m137-shell)!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+
+/* The search bridge keeps its card treatment without drifting off the shared shell. */
+html body.wpbb-medicine-v137 #wp-theme-main .medicine-search-panel.container{
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+
+/* Shared section headings align to the same left edge and never exceed the shell. */
+html body.wpbb-medicine-v137 #wp-theme-main :is(.wp-theme-section-heading,.wpbb-v137-trust-intro){
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin-left:0!important;
+  margin-right:0!important;
+}
+
+/* --------------------------------------------------------------------------
+   Uniform repeatable-content grid. JS only adds these classes to real card rows.
+   -------------------------------------------------------------------------- */
+html body.wpbb-medicine-v137 #wp-theme-main .wpbb-v137-grid{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:var(--wpbb-m137-grid-gap)!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+  align-items:stretch!important;
+}
+html body.wpbb-medicine-v137 #wp-theme-main .wpbb-v137-grid > .wpbb-v137-grid-cell{
+  box-sizing:border-box!important;
+  float:none!important;
+  display:flex!important;
+  width:auto!important;
+  max-width:none!important;
+  min-width:0!important;
+  height:auto!important;
+  margin:0!important;
+  padding:0!important;
+  flex:none!important;
+  align-items:stretch!important;
+}
+html body.wpbb-medicine-v137 #wp-theme-main .wpbb-v137-grid > .wpbb-v137-grid-cell > *{
+  box-sizing:border-box!important;
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+@media(min-width:720px){
+  html body.wpbb-medicine-v137 #wp-theme-main .wpbb-v137-grid:is(.wpbb-v137-cols-2,.wpbb-v137-cols-3,.wpbb-v137-cols-4){
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+@media(min-width:1040px){
+  html body.wpbb-medicine-v137 #wp-theme-main .wpbb-v137-grid.wpbb-v137-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  html body.wpbb-medicine-v137 #wp-theme-main .wpbb-v137-grid.wpbb-v137-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+  html body.wpbb-medicine-v137 #wp-theme-main .wpbb-v137-grid.wpbb-v137-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+}
+
+/* Existing v136 process grid joins the same spacing rhythm. */
+html body.wpbb-medicine-v137 #wp-theme-main .wpbb-v136-process-grid{
+  gap:var(--wpbb-m137-grid-gap)!important;
+}
+
+/* Trust becomes a full-shell intro followed by the same responsive card grid. */
+html body.wpbb-medicine-v137 #wp-theme-main .wpbb-v137-trust-layout{
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:32px!important;
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  padding:0!important;
+}
+html body.wpbb-medicine-v137 #wp-theme-main .wpbb-v137-trust-layout > *{
+  box-sizing:border-box!important;
+  float:none!important;
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  margin:0!important;
+}
+html body.wpbb-medicine-v137 #wp-theme-main .medicine-trust-band .wpbb-v137-grid{
+  margin-top:0!important;
+}
+
+/* Equal-height component surfaces across medicine card families. */
+html body.wpbb-medicine-v137 #wp-theme-main :is(
+  .wp-theme-sector-card,
+  .medicine-speciality-card,
+  .medicine-trust-card,
+  .medicine-doctor-card,
+  .medicine-pharmacy-catalogue .wpbb-catalogue-card,
+  .wpbb-v136-process-card
+){
+  box-sizing:border-box!important;
+  height:100%!important;
+  min-width:0!important;
+  border-radius:var(--wpbb-m137-card-radius)!important;
+}
+
+/* --------------------------------------------------------------------------
+   Media quality: one aspect box, native rendering, no inherited blur/zoom.
+   -------------------------------------------------------------------------- */
+html body.wpbb-medicine-v137 #wp-theme-main :is(
+  .wp-theme-sector-media-text__media,
+  .medicine-doctor-card__media,
+  .wp-theme-gallery-section .swiper-slide,
+  .wp-theme-gallery-section .wpbb-swiper-slide
+){
+  box-sizing:border-box!important;
+  overflow:hidden!important;
+  border-radius:var(--wpbb-m137-media-radius)!important;
+}
+html body.wpbb-medicine-v137 #wp-theme-main :is(
+  .wp-theme-sector-media-text__media img,
+  .medicine-doctor-card__media img,
+  .wp-theme-gallery-section .swiper-slide img,
+  .wp-theme-gallery-section .wpbb-swiper-slide img
+){
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  height:auto!important;
+  aspect-ratio:4/3!important;
+  margin:0!important;
+  padding:0!important;
+  object-fit:cover!important;
+  object-position:center center!important;
+  filter:none!important;
+  transform:none!important;
+  image-rendering:auto!important;
+}
+
+/* Keep vector/product artwork crisp while using the same media footprint. */
+html body.wpbb-medicine-v137 #wp-theme-main .medicine-pharmacy-catalogue .wpbb-catalogue-card .card-img-top{
+  display:block!important;
+  width:100%!important;
+  max-width:none!important;
+  height:auto!important;
+  aspect-ratio:4/3!important;
+  margin:0!important;
+  padding:26px!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  filter:none!important;
+  transform:none!important;
+  image-rendering:auto!important;
+}
+
+/* Gallery slides use the same crop and avoid mixed inline heights. */
+html body.wpbb-medicine-v137 #wp-theme-main .wp-theme-gallery-section :is(.swiper-slide,.wpbb-swiper-slide){
+  height:auto!important;
+  min-height:0!important;
+}
+html body.wpbb-medicine-v137 #wp-theme-main .wp-theme-gallery-section :is(figure,picture){
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  margin:0!important;
+}
+
+/* Doctor/finder output should never reintroduce Bootstrap negative margins. */
+html body.wpbb-medicine-v137 #wp-theme-main :is(.medicine-doctor-results,.medicine-pharmacy-catalogue){
+  width:100%!important;
+  max-width:100%!important;
+}
+
+@media(max-width:759px){
+  body.wpbb-medicine-v137{--wpbb-m137-page-pad:16px;--wpbb-m137-grid-gap:18px}
+  html body.wpbb-medicine-v137 #wp-theme-main .wpbb-v137-trust-layout{gap:24px!important}
+  html body.wpbb-medicine-v137 #wp-theme-main .medicine-search-panel.container{padding:20px!important}
+}
+
+/* v136 stat cards use the same section gutter as every other medicine grid. */
+html body.wpbb-medicine-v137 #wp-theme-main .wpbb-v136-stats-grid{
+  gap:var(--wpbb-m137-grid-gap)!important;
+}

@@ -64,7 +64,7 @@ if ( ! function_exists( 'wpbb_child_381045_consistency_config' ) ) {
             'wp-bbtheme-child-automotive' => array(
                 'key' => 'automotive',
                 'label' => 'Automotive',
-                'hero' => 'assets/img/demo/hero.jpg',
+                'hero' => 'assets/img/demo/hero-hq.jpg',
                 'about' => 'assets/img/demo/about.jpg',
                 'gallery' => array(
                     array( 'assets/img/demo/item-1.jpg', 'New vehicle exterior' ),
@@ -89,7 +89,7 @@ if ( ! function_exists( 'wpbb_child_381045_consistency_config' ) ) {
             'wp-bbtheme-child-building-services' => array(
                 'key' => 'building-services',
                 'label' => 'Building services',
-                'hero' => 'assets/img/demo/hero-photo.jpg',
+                'hero' => 'assets/img/demo/hero-hq.jpg',
                 'about' => 'assets/img/demo/about-photo.jpg',
                 'gallery' => array(
                     array( 'assets/img/demo/item-1.jpg', 'Electrical service' ),
@@ -114,7 +114,7 @@ if ( ! function_exists( 'wpbb_child_381045_consistency_config' ) ) {
             'wp-bbtheme-child-business' => array(
                 'key' => 'business',
                 'label' => 'Business',
-                'hero' => 'assets/img/demo/office-wide.jpg',
+                'hero' => 'assets/img/demo/office-wide-hq.jpg',
                 'about' => 'assets/img/demo/office-detail.jpg',
                 'gallery' => array(
                     array( 'assets/img/demo/office-wide.jpg', 'Studio workspace' ),
@@ -128,7 +128,7 @@ if ( ! function_exists( 'wpbb_child_381045_consistency_config' ) ) {
             'wp-bbtheme-child-elearning' => array(
                 'key' => 'elearning',
                 'label' => 'E-Learning',
-                'hero' => 'assets/img/demo/hero-photo.jpg',
+                'hero' => 'assets/img/demo/hero-hq.jpg',
                 'about' => 'assets/img/demo/about-photo.jpg',
                 'gallery' => array(
                     array( 'assets/img/demo/item-1.jpg', 'Online course lesson' ),
@@ -153,7 +153,7 @@ if ( ! function_exists( 'wpbb_child_381045_consistency_config' ) ) {
             'wp-bbtheme-child-hotel' => array(
                 'key' => 'hotel',
                 'label' => 'Hotel',
-                'hero' => 'assets/img/demo/hero-photo.jpg',
+                'hero' => 'assets/img/demo/hero-hq.jpg',
                 'about' => 'assets/img/demo/about-photo.jpg',
                 'gallery' => array(
                     array( 'assets/img/demo/hero-photo.jpg', 'Hotel arrival' ),
@@ -183,7 +183,7 @@ if ( ! function_exists( 'wpbb_child_381045_consistency_config' ) ) {
             'wp-bbtheme-child-insurance' => array(
                 'key' => 'insurance',
                 'label' => 'Insurance',
-                'hero' => 'assets/img/demo/hero-photo.jpg',
+                'hero' => 'assets/img/demo/hero-hq.jpg',
                 'about' => 'assets/img/demo/about-photo.jpg',
                 'gallery' => array(
                     array( 'assets/img/demo/item-1.jpg', 'Personal insurance guidance' ),
@@ -197,7 +197,7 @@ if ( ! function_exists( 'wpbb_child_381045_consistency_config' ) ) {
             'wp-bbtheme-child-logistics' => array(
                 'key' => 'logistics',
                 'label' => 'Logistics',
-                'hero' => 'assets/img/demo/hero-photo.jpg',
+                'hero' => 'assets/img/demo/hero-hq.jpg',
                 'about' => 'assets/img/demo/about-photo.jpg',
                 'gallery' => array(
                     array( 'assets/img/demo/item-1.jpg', 'Road freight service' ),
@@ -222,7 +222,7 @@ if ( ! function_exists( 'wpbb_child_381045_consistency_config' ) ) {
             'wp-bbtheme-child-medicine' => array(
                 'key' => 'medicine',
                 'label' => 'Medicine',
-                'hero' => 'assets/img/medical-photos/hero-health.jpg',
+                'hero' => 'assets/img/demo/hero-hq.jpg',
                 'about' => 'assets/img/medical-photos/about-health.jpg',
                 'gallery' => array(
                     array( 'assets/img/medical-photos/care-1.jpg', 'Clinical consultation' ),
@@ -249,7 +249,7 @@ if ( ! function_exists( 'wpbb_child_381045_consistency_config' ) ) {
             'wp-bbtheme-child-realestate' => array(
                 'key' => 'realestate',
                 'label' => 'Real estate',
-                'hero' => 'assets/img/properties/willow-house.jpg',
+                'hero' => 'assets/img/demo/hero-hq.jpg',
                 'about' => 'assets/img/properties/cedar-cottage.jpg',
                 'gallery' => array(
                     array( 'assets/img/properties/harbour-house.jpg', 'Harbour House' ),
@@ -277,7 +277,7 @@ if ( ! function_exists( 'wpbb_child_381045_consistency_config' ) ) {
             'wp-bbtheme-child-restaurant' => array(
                 'key' => 'restaurant',
                 'label' => 'Restaurant',
-                'hero' => 'assets/img/demo/hero-photo.jpg',
+                'hero' => 'assets/img/demo/hero-hq.jpg',
                 'about' => 'assets/img/demo/about-photo.jpg',
                 'gallery' => array(
                     array( 'assets/img/demo/item-1.jpg', 'Restaurant dining room' ),
@@ -302,7 +302,7 @@ if ( ! function_exists( 'wpbb_child_381045_consistency_config' ) ) {
             'wp-bbtheme-child-travel' => array(
                 'key' => 'travel',
                 'label' => 'Travel',
-                'hero' => 'assets/img/demo/hero-photo.jpg',
+                'hero' => 'assets/img/demo/hero-hq.jpg',
                 'about' => 'assets/img/demo/about-photo.jpg',
                 'gallery' => array(
                     array( 'assets/img/demo/item-1.jpg', 'Coastal destination' ),
@@ -327,7 +327,7 @@ if ( ! function_exists( 'wpbb_child_381045_consistency_config' ) ) {
             'wp-bbtheme-child-woo-events' => array(
                 'key' => 'events',
                 'label' => 'Events',
-                'hero' => 'assets/img/demo/hero-photo.jpg',
+                'hero' => 'assets/img/demo/hero-hq.jpg',
                 'about' => 'assets/img/demo/about-photo.jpg',
                 'gallery' => array(
                     array( 'assets/img/demo/item-1.jpg', 'Conference stage and audience' ),
@@ -354,7 +354,7 @@ if ( ! function_exists( 'wpbb_child_381045_consistency_config' ) ) {
             'wp-bbtheme-child-woo-clouthes' => array(
                 'key' => 'fashion-shop',
                 'label' => 'Fashion shop',
-                'hero' => 'assets/img/products/relaxed-cotton-shirt.jpg',
+                'hero' => 'assets/img/demo/hero-hq.jpg',
                 'about' => 'assets/img/products/utility-overshirt.jpg',
                 'gallery' => array(
                     array( 'assets/img/products/essential-t-shirt.jpg', 'Essential T-shirt' ),
@@ -368,7 +368,7 @@ if ( ! function_exists( 'wpbb_child_381045_consistency_config' ) ) {
             'wp-bbtheme-child-woo-tech-shop' => array(
                 'key' => 'tech-shop',
                 'label' => 'Tech shop',
-                'hero' => 'assets/img/store/tech-workspace.jpg',
+                'hero' => 'assets/img/demo/hero-hq.jpg',
                 'about' => 'assets/img/store/studio-monitor.jpg',
                 'gallery' => array(
                     array( 'assets/img/store/ultralight-laptop.jpg', 'Ultralight laptop' ),
@@ -641,6 +641,12 @@ if ( ! function_exists( 'wpbb_child_381045_repair_swipers' ) ) {
         }
 
         $hero_images = array_values( array_unique( array_filter( array_merge( array( $hero, $about ), wp_list_pluck( $gallery, 'url' ) ) ) ) );
+        /* v3.8.11.16: keep the dedicated three-image hero set even when the
+         * resumable media worker runs after the reset-safe finish pass. */
+        if ( function_exists( 'wpbb_child_v116_hero_urls' ) ) {
+            $v116_hero_images = wpbb_child_v116_hero_urls();
+            if ( $v116_hero_images ) $hero_images = $v116_hero_images;
+        }
 
         return (string) preg_replace_callback(
             '~<!--\s+wp:wpbb/swiper\s+(\{.*?\})\s+/-->~s',
